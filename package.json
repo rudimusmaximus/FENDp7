@@ -1,0 +1,19 @@
+{
+  "name": "neighborhood_map",
+  "version": "0.1.0",
+  "description": "FENDp7 - Neighborhood Map (React)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rudimusmaximus/FENDp7.git"
+  },
+  "author": "Raul Flores jr \"rudy\"",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/rudimusmaximus/FENDp7/issues"
+  },
+  "homepage": "https://github.com/rudimusmaximus/FENDp7#readme"
+}
