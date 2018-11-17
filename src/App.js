@@ -11,25 +11,25 @@ class App extends Component {
 
   componentDidMount = () => {
   //or componentDidMount(){}
-      let googleMapsPromise = loadGoogleMaps();
-      let markersPromise = loadMarkers();
+      // let googleMapsPromise = loadGoogleMaps();
+      // let markersPromise = loadMarkers();
 
       Promise.all([
           fetch('https://rudimusmaximus.github.io/dfwTips/dfwTipsAPI.json')
               .then(Utilities.status)
               .then(Utilities.json)
               .then(data => console.log(`Request succeeded with JSON response: `, data))
-              .catch(error => console.log(`Request failed: `, error)),
-          googleMapsPromise,
-          markersPromise
-      ])
-          .then(values =>{
-              let google = values[0];
-              let places = values[1].response.venues;
-              //keep here and not in state for the maps stuff
-              this.google = google;
-              this.markers = [];
-          });
+              .catch(error => console.log(`Request failed: `, error))
+          // googleMapsPromise,
+          // markersPromise
+      ]);
+      // .then(values =>{
+      //     let google = values[0];
+      //     let places = values[1].response.venues;
+      //     //keep here and not in state for the maps stuff
+      //     this.google = google;
+      //     this.markers = [];
+      // });
 
   }
   //why an error ? see also ud864 for my key and for proj codes 2 and 4
