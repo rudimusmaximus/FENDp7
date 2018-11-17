@@ -15,12 +15,15 @@ See also
 | Area | Comments |
 | :--- | :--- |
 | 1. enable react | a. starting with create in a clean build per [docs](https://reactjs.org/docs/create-a-new-react-app.html)<br>`npx create-react-app my-app`<br> will generate package.json and readme.md so run first or take care when merging with DevFlow starting material |
-| 2. gitignore | a. becoming a monster file, need to reveiw cross platform needs against implementing my own style standards. Future TODO |
-| 3. TODO | a. TODO |
+| 2. gitignore | a. becoming a monster file, need to review cross platform needs against implementing my own style standards. Future TODO |
+| 3. JSON API | a. Created my own for use on this project to create the map markers. See https://rudimusmaximus.github.io/dfwTips/ for readme and here for repo https://github.com/rudimusmaximus/dfwTips |
+| 4. jsdoc | a. how does jsdoc differ when assigning arrow functions to declared variables as arrow functions are anonymous. b. [no answer](https://stackoverflow.com/questions/3171454/best-way-to-document-anonymous-objects-and-functions-with-jsdoc). opinion based approach. interesting TODO: develop my own approach |
+| 5. service workers | a. create react app comes with this! TODO: add instructions to readme...it's a single line edit. |
+| n. TODO | a. TODO |
 
 # Instructions
 
-From the course Project Overview, we create an app that fulfills the [Project Rubric](https://TODO) See also, #1 [...FENDp6/issues/1](https://github.com/rudimusmaximus/FENDp6/issues/1) for checklist.
+From the course Project Overview, we create an app that fulfills the [Project Rubric](https://TODO) See also, #1 [...FENDp7/issues/1](https://github.com/rudimusmaximus/FENDp7/issues/1) for checklist.
 
 ## App Functionality
 In this application, the main page displays a map of at least 5 places.
@@ -54,11 +57,27 @@ TODO: notes
 ```
 
   "**About State**: 
-  Because we are using mulitple APIs, lets use an array of promises for getting our information.
+  Because we are using multiple APIs, let's use an array of promises for getting our information (maybe).
   
   See also, [Thinking in React Guide](https://reactjs.org/docs/thinking-in-react.html
 
 ## Mock
+see instructions in course.
+Using a working list created in app.js
+```js
+<ol className="tempOl">
+    <li>load the markers using json api and utility functions</li>
+    <li>paint the map</li>
+    <li>paint the search box or selectable filter</li>
+    <li>add the sidebar/menu/collapsable list</li>
+    <li>window popups for markers if not already done load from api</li>
+    <li>parse into components</li>
+    <li>testing</li>
+    <li>activate service worker and test</li>
+    <li>bonus more info form another api like squarspace</li>
+    <li>THORUGHOUT check the rubric checklist in issue 1</li>
+</ol>
+```
 Full page map with filter overlay and expandable menu of filter hits reflected in map.  
 
 ### Mock menu closed welcome
