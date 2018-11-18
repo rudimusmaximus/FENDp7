@@ -9,19 +9,25 @@ class App extends Component {
   }
 
   componentDidMount = () => {
+    fetch('https://rudimusmaximus.github.io/dfwTips/dfwTipsAPI.json')
+        .then(Utilities.status)
+        .then(Utilities.json)
+        .then(data => console.log(`Request succeeded with JSON response: `, data))
+        .catch(error => console.log(`Request failed: `, error))
+
   //or componentDidMount(){}
       // let googleMapsPromise = loadGoogleMaps();
       // let markersPromise = loadMarkers();
 
-      Promise.all([
-          fetch('https://rudimusmaximus.github.io/dfwTips/dfwTipsAPI.json')
-              .then(Utilities.status)
-              .then(Utilities.json)
-              .then(data => console.log(`Request succeeded with JSON response: `, data))
-              .catch(error => console.log(`Request failed: `, error))
+      //Promise.all([
+          // fetch('https://rudimusmaximus.github.io/dfwTips/dfwTipsAPI.json')
+          //     .then(Utilities.status)
+          //     .then(Utilities.json)
+          //     .then(data => console.log(`Request succeeded with JSON response: `, data))
+          //     .catch(error => console.log(`Request failed: `, error))
           // googleMapsPromise,
           // markersPromise
-      ]);
+    //  ]);
       // .then(values =>{
       //     let google = values[0];
       //     let places = values[1].response.venues;
@@ -45,7 +51,9 @@ class App extends Component {
               <p className="tempTODO">
                 dfwTips by Rudy...comming soon!...
               </p>
-              <ol className="tempOl">
+              <div className="map">
+              no map yet</div>
+              <ol className="tempOl">TODO:
                   <li>load the markers using json api and utility functions</li>
                   <li>paint the map</li>
                   <li>paint the search box or selectable filter</li>
