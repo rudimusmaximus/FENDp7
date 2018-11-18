@@ -19,9 +19,10 @@ See also
 | 3. JSON API | a. Created my own for use on this project to create the map markers. See https://rudimusmaximus.github.io/dfwTips/ for readme and here for repo https://github.com/rudimusmaximus/dfwTips |
 | 4. jsdoc | a. how does jsdoc differ when assigning arrow functions to declared variables as arrow functions are anonymous. b. [no answer](https://stackoverflow.com/questions/3171454/best-way-to-document-anonymous-objects-and-functions-with-jsdoc). opinion based approach. interesting TODO: develop my own approach |
 | 5. service workers | a. create react app comes with this! TODO: add instructions to readme...it's a single line edit. |
+| 6. svg | a. react uses https://www.w3.org/Graphics/SVG/ for it's rotating icon. TODO: research this space. |
 | n. TODO | a. TODO |
 
-# Instructions
+# Instructions  
 
 From the course Project Overview, we create an app that fulfills the [Project Rubric](https://TODO) See also, #1 [...FENDp7/issues/1](https://github.com/rudimusmaximus/FENDp7/issues/1) for checklist.
 
@@ -63,18 +64,18 @@ TODO: notes
 
 ## Mock
 see instructions in course.
-Using a working list created in app.js
+toUsing a working list created in app.js
 ```js
 <ol className="tempOl">
     <li>load the markers using json api and utility functions</li>
     <li>paint the map</li>
     <li>paint the search box or selectable filter</li>
-    <li>add the sidebar/menu/collapsable list</li>
-    <li>window popups for markers if not already done load from api</li>
+    <li>add the sidebar/menu/collapsible list</li>
+    <li>window popups for markers already done load from api</li>
     <li>parse into components</li>
     <li>testing</li>
     <li>activate service worker and test</li>
-    <li>bonus more info form another api like squarspace</li>
+    <li>bonus more info from another api like squarspace</li>
     <li>THORUGHOUT check the rubric checklist in issue 1</li>
 </ol>
 ```

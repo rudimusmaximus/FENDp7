@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 import * as Utilities from './Utilities';
 
@@ -50,12 +49,12 @@ class App extends Component {
                   <li>load the markers using json api and utility functions</li>
                   <li>paint the map</li>
                   <li>paint the search box or selectable filter</li>
-                  <li>add the sidebar/menu/collapsable list</li>
-                  <li>window popups for markers if not already done load from api</li>
+                  <li>add the sidebar/menu/collapsible list</li>
+                  <li>window popups for markers already done load from api</li>
                   <li>parse into components</li>
                   <li>testing</li>
                   <li>activate service worker and test</li>
-                  <li>bonus more info form another api like squarspace</li>
+                  <li>bonus more info from another api like squarspace</li>
                   <li>THORUGHOUT check the rubric checklist in issue 1</li>
               </ol>
               <footer className="footer" id="footer">
