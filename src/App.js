@@ -1,37 +1,42 @@
 import React, { Component } from 'react';
 import './App.css';
-import * as NoGo from './components/NoGo';
+import NoGo from './components/NoGo';
 import * as Utilities from './Utilities';
 import MapMaker from './components/MapMaker';
 
 class App extends Component {
 
   state = {
-    markers: [{}],
-    message: "Nothing to say yet.",
-    appGreenLight: false
+      markers: [{}],
+      message: "Nothing to say yet.",
+      appGreenLight: true
   }
 
   componentDidMount () {
-//// REVIEW:     let googleMapsPromise = loadGoogleMaps();
+      //// REVIEW:     let googleMapsPromise = loadGoogleMaps();
 
-    // let markersPromise = loadMarkers();
-// 
-    fetch('https://rudimusmaximus.github.io/dfwTips/dfwTipsAPI.json')
-        .then(Utilities.status)
-        .then(Utilities.json)
-        .then(data => console.log(`Request succeeded with JSON response: `, data))
-        .catch(error => console.log(`Request failed: `, error));
-    
+      // let markersPromise = loadMarkers();
+      //
+      fetch('https://rudimusmaximus.github.io/dfwTips/dfwTipsAPI.json')
+          .then(Utilities.status)
+          .then(Utilities.json)
+          .then(data => console.log(`Request succeeded with JSON response: `, data))
+          .catch(error => {
+              let eMessage = 'We could not reach the dfwTipsAPI we need to make map markers.';
+              console.log(`Request failed: `, error);
+              this.setState({message: eMessage});
+              this.setState({appGreenLight: false});
+          });
+
       //Promise.all([
-          // fetch('https://rudimusmaximus.github.io/dfwTips/dfwTipsAPI.json')
-          //     .then(Utilities.status)
-          //     .then(Utilities.json)
-          //     .then(data => console.log(`Request succeeded with JSON response: `, data))
-          //     .catch(error => console.log(`Request failed: `, error))
-          // googleMapsPromise,
-          // markersPromise
-    //  ]);
+      // fetch('https://rudimusmaximus.github.io/dfwTips/dfwTipsAPI.json')
+      //     .then(Utilities.status)
+      //     .then(Utilities.json)
+      //     .then(data => console.log(`Request succeeded with JSON response: `, data))
+      //     .catch(error => console.log(`Request failed: `, error))
+      // googleMapsPromise,
+      // markersPromise
+      //  ]);
       // .then(values =>{
       //     let google = values[0];
       //     let places = values[1].response.venues;
@@ -51,16 +56,16 @@ class App extends Component {
   render() {
       return (
           <div className="App">
-          <NoGo message={this.state.message} 
-                appGreenLight={this.state.appGreenLight} 
-          />
-            <h1 className="App-header">dfwTips</h1>
+              <NoGo  message={this.state.message}
+                  appGreenLight={this.state.appGreenLight}
+              />
+              <h1 className="App-header">dfwTips</h1>
               <p className="tempTODO">
                 dfwTips by Rudy...comming soon!...
               </p>
               <div id="map"></div>
-              <MapMaker 
-                markers={this.state.markers}
+              <MapMaker
+                  markers={this.state.markers}
               />
               <ol className="tempOl">TODO:
                   <li>load the markers using json api and utility functions</li>

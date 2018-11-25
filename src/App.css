@@ -27,3 +27,13 @@
   text-align: left;
   font-weight: bold;
 }
+
+.do_not_start_error {
+  color: white;
+  font-weight: bold;
+  background-color: #901b13;
+}
+
+.error_intro {
+  text-align: left;
+}
