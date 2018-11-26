@@ -11,6 +11,7 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  margin: 0;
 }
 
 .footer {
@@ -21,6 +22,9 @@
 .tempTODO {
   color: #083ca4;
   font-weight: bold;
+}
+.done {
+font-weight: normal;
 }
 
 .tempOl {
@@ -36,4 +40,15 @@
 
 .error_intro {
   text-align: left;
+}
+
+#map {
+  height: 50vh;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }

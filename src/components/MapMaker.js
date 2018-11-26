@@ -14,13 +14,13 @@ class MapMaker extends Component {
       let markersToRender = this.props.markers;
       // if (this.props.markers && this.props.markers.length)
       //     //shelves = this.updateMarkers();
-      // 
-      console.log(`MapMaker.js rendered.`)
+      //
+      console.log(`MapMaker.js rendered.`);
       console.log(markersToRender);
       return (
-        <div className="tempTODO">
-          i will be the map.
-        </div>
+          <div className="tempTODO">
+          i will be changed from MapMaker to marker painter.
+          </div>
       );
   }
 
