@@ -16,7 +16,7 @@ See also
 | :--- | :--- |
 | 1. enable react | a. starting with create in a clean build per [docs](https://reactjs.org/docs/create-a-new-react-app.html)<br>`npx create-react-app my-app`<br> will generate package.json and readme.md so run first or take care when merging with DevFlow starting material |
 | 2. gitignore | a. becoming a monster file, need to review cross platform needs against implementing my own style standards. Future TODO |
-| 3. JSON API | a. Created my own for use on this project to create the map markers. See https://rudimusmaximus.github.io/dfwTips/ for readme and here for repo https://github.com/rudimusmaximus/dfwTips |
+| 3. JSON API | a. Created my own for use on this project to create the map markers. See https://rudimusmaximus.github.io/dfwTips/ for readme and here for repo https://github.com/rudimusmaximus/dfwTips <br>b. This repo is credited with link in footer. These tips are the source data for making map markers and geting the categories by which to filter. |
 | 4. jsdoc | a. how does jsdoc differ when assigning arrow functions to declared variables as arrow functions are anonymous. b. [no answer](https://stackoverflow.com/questions/3171454/best-way-to-document-anonymous-objects-and-functions-with-jsdoc). opinion based approach. interesting TODO: develop my own approach |
 | 5. service workers | a. create react app comes with this! TODO: add instructions to readme...it's a single line edit. |
 | 6. svg | a. react uses https://www.w3.org/Graphics/SVG/ for it's rotating icon. TODO: research this space. |

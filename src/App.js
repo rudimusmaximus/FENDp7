@@ -72,7 +72,8 @@ class App extends Component {
                   <li>THORUGHOUT check the rubric checklist in issue 1</li>
               </ol>
               <footer className="footer" id="footer">
-                  Copyright (c) 2018 All Rights Reserved.
+                  Copyright (c) 2018 All Rights Reserved featuring tips from
+                  <a className="footer-link" href="https://github.com/rudimusmaximus/dfwTips"> dfwTips</a>
               </footer>
           </div>
       );
