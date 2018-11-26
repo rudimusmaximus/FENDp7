@@ -11,6 +11,7 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  margin: 0;
 }
 
 .footer {
@@ -22,8 +23,32 @@
   color: #083ca4;
   font-weight: bold;
 }
+.done {
+font-weight: normal;
+}
 
 .tempOl {
   text-align: left;
   font-weight: bold;
+}
+
+.do_not_start_error {
+  color: white;
+  font-weight: bold;
+  background-color: #901b13;
+}
+
+.error_intro {
+  text-align: left;
+}
+
+#map {
+  height: 50vh;
+}
+
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
 }
