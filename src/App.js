@@ -37,7 +37,8 @@ class App extends Component {
   }
   renderMap = () => {
       //run script tag from outside of React
-      loadScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyBQF4afYXb3lcv9KcI6BforUA1YfFBWank&v=3&callback=initMap');
+      loadScript('https://maps.googleapis.com/maps/api/js?key='+
+      'AIzaSyBQF4afYXb3lcv9KcI6BforUA1YfFBWank&v=3&callback=initMap');
       window.initMap = this.initMap;
   }
   initMap = () => {
@@ -48,37 +49,58 @@ class App extends Component {
   }
   render() {
       return (
-          <div className="App">
-              <NoGo  message={this.state.message}
-                  appGreenLight={this.state.appGreenLight}
-              />
-              <h1 className="App-header">dfwTips</h1>
-              <div id="map"></div>
-              <MapMaker
-                  markers={this.state.activeMarkers}
-              />
-              <ol className="tempOl">TODO:
-                  <li className="done">load dfwTips data from api with error handling</li>
-                  <li className="done">paint the map</li>
-                  <li>load the markers using json api and utility functions</li>
-                  <li>paint the search box or selectable filter</li>
-                  <li>add the sidebar/menu/collapsible list</li>
-                  <li>npm shorid for indexing the jsx elements</li>
-                  <li>window popups for markers already done load from api</li>
-                  <li className="done">parse into components as i go</li>
-                  <li>testing</li>
-                  <li>activate service worker and test</li>
-                  <li className="done">bonus more info from another api like squarspace</li>
-                  <li>THORUGHOUT check the rubric checklist in issue 1</li>
-              </ol>
-              <footer className="footer" id="footer">
-                  Copyright (c) 2018 All Rights Reserved featuring tips from
-                  <a className="footer-link" href="https://github.com/rudimusmaximus/dfwTips"> dfwTips</a>
-              </footer>
+          <div id="body-two">
+              <nav className="main-drawer, dark_blue">
+                  <div className="main-filter-options">
+                      <select id="main-filter-select"
+                          name="main-filter-select-category"
+                          onChange="updateTipList()"
+                      >
+                          <option value="all">All Categories</option>
+                          <option value="cat2">Category 2</option>
+                          <option value="cat3">Category 3</option>
+                          <option value="cat4">Category 4</option>
+                      </select>
+                  </div>
+                  <ul id="tip-list">Filtered list appears below. TODO: add li s
+                      <ol className="tempOl">TODO:
+                          <li className="done">
+                load dfwTips data from api with error handling</li>
+                          <li className="done">paint the map</li>
+                          <li>load the markers using json api and utility functions</li>
+                          <li>paint the search box or selectable filter</li>
+                          <li>add the sidebar/menu/collapsible list</li>
+                          <li>npm shorid for indexing the jsx elements</li>
+                          <li>window popups for markers already done load from api</li>
+                          <li className="done">parse into components as i go</li>
+                          <li>testing</li>
+                          <li>activate service worker and test</li>
+                          <li className="done">
+                bonus more info from another api like squarspace</li>
+                          <li>THORUGHOUT check the rubric checklist in issue 1</li>
+                      </ol>
+                  </ul>
+              </nav>
+              <main className="light_blue">
+                  <NoGo  message={this.state.message}
+                      appGreenLight={this.state.appGreenLight}
+                  />
+                  <h1 className="main-app-header">dfwTips</h1>
+                  <div id="map"></div>
+                  <footer className="footer" id="footer">
+                      <a className="footer-link"
+                          href="https://github.com/rudimusmaximus/dfwTips"
+                      >featuring dfwTips
+                      </a>
+                  </footer>
+              </main>
           </div>
       );
   }
 }
+// removed                   <MapMaker
+//                      markers={this.state.activeMarkers}
+//                />
 
 /**
  * Integrates Google Maps into the react app without any external components
