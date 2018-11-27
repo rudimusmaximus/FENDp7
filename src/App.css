@@ -45,10 +45,6 @@
   height: 3vh;
 }
 
-.main-app-header {
-  height: 4vh;
-}
-
 html,
 body,
 main {
@@ -76,6 +72,20 @@ body {
 }
 
 /* navigation drawer styling */
+.hamburger {
+  background-color: #282c34;
+  font-size: 20px;
+  padding: 8px 12px 0 12px;
+}
+
+.hamburger-title {
+  font-weight: bold;
+  height: 4vh;
+  background-color: #282c34;
+  color: white;
+  font-size: 20px;
+}
+
 nav {
   width: 300px;
   position: absolute;
@@ -108,7 +118,9 @@ select {
   /* border: 3px solid #901b13; */
 
   border-radius: 4px;
-  background-color: #aadafe;
+  background-color: #099dd9;
+
+  /* background-color: #aadafe; */
 }
 
 @media screen and (min-width: 600px) {
