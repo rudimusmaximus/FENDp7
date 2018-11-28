@@ -1,19 +1,34 @@
 import React, { Component } from 'react';
 import './App.css';
 import NoGo from './components/NoGo';
+import FilterPanel from './components/FilterPanel';
+import HamburgerBar from './components/HamburgerBar';
+// import MapMaker from './components/MapMaker';
 import * as Utilities from './Utilities';
-import MapMaker from './components/MapMaker';
+// Load our icons
+// import ReactDOM from 'react-dom';
+import { library } from '@fortawesome/fontawesome-svg-core';
+// import { fab } from '@fortawesome/free-brands-svg-icons';
+import { faBars } from '@fortawesome/free-solid-svg-icons';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+library.add(faBars);
 
 class App extends Component {
 
   state = {
       markers: [{}],
       activeMarkers: [{}],
+      drawerIsOpen: false,
       message: "Nothing to say yet.",
       appGreenLight: true
   }
 
-  componentDidMount () {
+  componentDidMount = () =>{
+      console.log(`React App did mount...checking drawer state.`);
+      //TODO: determine if class contains open
+      // and if we can set   this.state.drawerIsOpen accordingly
+
+
       //Render plain map with known center using async script outside of React
       this.renderMap();
       //Get tips from a json API 'dfwTipsAPI'
@@ -22,7 +37,7 @@ class App extends Component {
           .then(Utilities.json)
           .then(data => {
               //Make map markers from the tips information
-              console.log(`Request succeeded with JSON response: `, data);
+              console.log(`dfwTips Request succeeded with JSON response: `, data);
               //TODO: make markers from these tips
               //TODO: make the map one time at load
           })
@@ -35,9 +50,21 @@ class App extends Component {
           });
 
   }
+  setInitialDrawerState = () => {
+      //need to read class (called after mounted) and
+      //if contained, set drawerIsOpen to match
+  }
+  toggleDrawerState = () => {
+      this.setState({
+          drawerIsOpen: !this.state.drawerIsOpen
+      });
+      console.log("App's toggleDrawerState just set drawerIsOpen to: ",
+          this.state.drawerIsOpen);
+  }
   renderMap = () => {
       //run script tag from outside of React
-      loadScript('https://maps.googleapis.com/maps/api/js?key=AIzaSyBQF4afYXb3lcv9KcI6BforUA1YfFBWank&v=3&callback=initMap');
+      loadScript('https://maps.googleapis.com/maps/api/js?key='+
+      'AIzaSyBQF4afYXb3lcv9KcI6BforUA1YfFBWank&v=3&callback=initMap');
       window.initMap = this.initMap;
   }
   initMap = () => {
@@ -48,36 +75,30 @@ class App extends Component {
   }
   render() {
       return (
-          <div className="App">
-              <NoGo  message={this.state.message}
-                  appGreenLight={this.state.appGreenLight}
-              />
-              <h1 className="App-header">dfwTips</h1>
-              <div id="map"></div>
-              <MapMaker
-                  markers={this.state.activeMarkers}
-              />
-              <ol className="tempOl">TODO:
-                  <li className="done">load dfwTips data from api with error handling</li>
-                  <li className="done">paint the map</li>
-                  <li>load the markers using json api and utility functions</li>
-                  <li>paint the search box or selectable filter</li>
-                  <li>add the sidebar/menu/collapsible list</li>
-                  <li>npm shorid for indexing the jsx elements</li>
-                  <li>window popups for markers already done load from api</li>
-                  <li className="done">parse into components as i go</li>
-                  <li>testing</li>
-                  <li>activate service worker and test</li>
-                  <li className="done">bonus more info from another api like squarspace</li>
-                  <li>THORUGHOUT check the rubric checklist in issue 1</li>
-              </ol>
-              <footer className="footer" id="footer">
-                  Copyright (c) 2018 All Rights Reserved.
-              </footer>
+          <div id="body-two">
+              <FilterPanel />
+              <main className="main, light_blue">
+                  <NoGo  message={this.state.message}
+                      appGreenLight={this.state.appGreenLight}
+                  />
+                  <HamburgerBar drawerIsOpen={this.state.drawerIsOpen}
+                      toggleDrawerState={this.state.toggleDrawerState}
+                  />
+                  <div id="map"></div>
+                  <footer className="footer" id="footer">
+                      <a className="footer-link"
+                          href="https://github.com/rudimusmaximus/dfwTips"
+                      >featuring dfwTips
+                      </a>
+                  </footer>
+              </main>
           </div>
       );
   }
 }
+// removed                   <MapMaker
+//                      markers={this.state.activeMarkers}
+//                />
 
 /**
  * Integrates Google Maps into the react app without any external components
@@ -92,6 +113,7 @@ function loadScript(url) {
     script.src = url;
     script.async = true;
     script.defer = true;
+    //basically, make sure our script is the first one
     index.parentNode.insertBefore(script, index);
 }
 

@@ -15,7 +15,7 @@ class MapMaker extends Component {
       // if (this.props.markers && this.props.markers.length)
       //     //shelves = this.updateMarkers();
       //
-      console.log(`MapMaker.js rendered.`);
+      console.log(`MapMaker component rendered.`);
       console.log(markersToRender);
       return (
           <div className="tempTODO">
