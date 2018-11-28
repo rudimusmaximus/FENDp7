@@ -3,6 +3,7 @@ import './App.css';
 import NoGo from './components/NoGo';
 import * as Utilities from './Utilities';
 import MapMaker from './components/MapMaker';
+import FilterPanel from './components/FilterPanel';
 // Load our icons
 import ReactDOM from 'react-dom';
 import { library } from '@fortawesome/fontawesome-svg-core';
@@ -57,43 +58,7 @@ class App extends Component {
   render() {
       return (
           <div id="body-two">
-              <nav className="main-drawer, dark_blue">
-                  <div className="main-filter-options">
-                      <select id="main-filter-select"
-                          name="main-filter-select-category"
-                          onChange="updateTipList()"
-                      >
-                          <option value="all">All Categories</option>
-                          <option value="bbq">Eat BBQ</option>
-                          <option value="ent">Entertainment</option>
-                          <option value="mov">Watch a Movie</option>
-                          <option value="air">Where's The Airport</option>
-                      </select>
-                  </div>
-                  <ul id="tip-list">Filtered list appears below. TODO: add li s
-                      <ol className="tempOl">TODO:
-                          <li>awesome font hamburger with working toggle functionality</li>
-                          <li>load the markers using json api and utility functions</li>
-                          <li>add the sidebar/menu/collapsible list</li>
-                          <li>npm shorid for indexing the jsx elements</li>
-                          <li>window popups for markers already done load from api</li>
-                          <li>activate service worker and test</li>
-                      </ol>
-                      <p></p>
-                      <ul>
-                          <li>testing</li>
-                          <li>rubric checklist in issue 1</li>
-                      </ul>
-                      <p></p>
-                      <ol className="tempOl">DONE:
-                          <li>paint the search box or selectable filter</li>
-                          <li>paint the map</li>
-                          <li>load dfwTips data from api with error handling</li>
-                          <li>parse into components as i go</li>
-                          <li>bonus more info from another api like squarspace</li>
-                      </ol>
-                  </ul>
-              </nav>
+              <FilterPanel />
               <main className="light_blue">
                   <NoGo  message={this.state.message}
                       appGreenLight={this.state.appGreenLight}
@@ -104,7 +69,7 @@ class App extends Component {
                           color="#099dd9"
                           // size="lg"
                           className="hamburger"
-                      />dfwTips
+                      />dfwTips - Where to go!
                   </div>
                   <div id="map"></div>
                   <footer className="footer" id="footer">

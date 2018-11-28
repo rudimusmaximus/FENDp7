@@ -10,7 +10,7 @@ TODO: figure out how to deploy react to github pages.
 # My Notes Completing This
 See also 
 
-## Lessons learned:  
+## Lessons learned with attributions and further reading  
 
 | Area | Comments |
 | :--- | :--- |
@@ -23,7 +23,14 @@ See also
 | 7. max watchers in ubuntu | a. limit issues with gitkraken is inotify issue in os, found [item 1](https://techsparx.com/blog/2018/02/gitkraken-inotify.html) and [item 2](https://ubuntuforums.org/showthread.php?t=1439759) for resolution. <br>```bash cat /proc/sys/fs/inotify/maxUser_watches``` <br> shows number active <br>```bash sudo sysctl fs.inotify.max_user_watches=99999``` <br> fixes and stays fixed in our crouton ubuntu when developing on chrome os |
 | 8. npm | a. installed modules are now added as a dependency by default so the --save option is no longer needed. Other save options remain like --save-dev or --save-optional. see [stackoverflow](https://stackoverflow.com/questions/19578796/what-is-the-save-option-for-npm-install) |
 | 9. lists and keys | a. index approaches, see [react doc](https://reactjs.org/docs/lists-and-keys.html), [Medium recommendation for using 'shortid'](https://medium.com/@robinpokorny/index-as-a-key-is-an-anti-pattern-e0349aece318), [recursion on children and keys (why)](https://reactjs.org/docs/reconciliation.html#recursing-on-children), [install shortid](https://www.npmjs.com/package/shortid), <br>b. TODO: install and use in this project <br>c. Basically, Index as a key is an anti-pattern |
+| 10. Hamburger menu (icons) | a. Used awesome fonts per this [article](https://alligator.io/react/font-awesome/)<br>And [this app](https://github.com/FortAwesome/react-fontawesome)<br>b. resizing font-size can help size the svg font also. TODO: research other solutions that flex the element height;I used vh or viewport height percent values that add up to 100 to ensure full page coverage since there is a menu title and a footer in addition to the map. This works in most cases but not perfect. Simulated landscape on mobile seemed not optimal, will review in testing.<br>c. see also [SVG JavaScript Core for advanced packages](https://fontawesome.com/how-to-use/on-the-web/advanced/svg-javascript-core) |
+| 11. future enhancements | a. better sidebar styling including perhaps custom slectors and pick lists. see [article for topic ideas](https://speckyboy.com/open-source-css-javascript-select-box-snippets/) |
 | n. TODO | a. TODO |
+
+## Other key walkthrougs and articles  
+In adition to the articles listed in my above notes, I made use of the following walkthroughs and articles for insight, inspiration, and help.
+- [Udacity | Neighborhood Map [4] - Add Dynamic Markers to Google Maps](https://www.youtube.com/watch?v=nDJ00zO9X2U)
+- TODO: any more?
 
 # Instructions  
 
