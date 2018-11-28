@@ -7,7 +7,7 @@ class FilterPanel extends Component {
   }
 
   render(){
-      console.log(`FilterPanel.js rendered.`);
+      console.log(`FilterPanel component rendered.`);
       return (
           <nav className="drawer, dark_blue">
               <div className="drawer-filter-options">

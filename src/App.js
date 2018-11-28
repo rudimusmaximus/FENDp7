@@ -1,15 +1,16 @@
 import React, { Component } from 'react';
 import './App.css';
 import NoGo from './components/NoGo';
-import * as Utilities from './Utilities';
-import MapMaker from './components/MapMaker';
 import FilterPanel from './components/FilterPanel';
+import HamburgerBar from './components/HamburgerBar';
+// import MapMaker from './components/MapMaker';
+import * as Utilities from './Utilities';
 // Load our icons
 import ReactDOM from 'react-dom';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 library.add(faBars);
 
 class App extends Component {
@@ -63,14 +64,7 @@ class App extends Component {
                   <NoGo  message={this.state.message}
                       appGreenLight={this.state.appGreenLight}
                   />
-                  <div className="hamburger-title">
-                      <FontAwesomeIcon
-                          icon="bars"
-                          color="#099dd9"
-                          // size="lg"
-                          className="hamburger"
-                      />dfwTips - Where to go!
-                  </div>
+                  <HamburgerBar />
                   <div id="map"></div>
                   <footer className="footer" id="footer">
                       <a className="footer-link"
