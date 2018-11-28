@@ -59,7 +59,7 @@ class App extends Component {
       return (
           <div id="body-two">
               <FilterPanel />
-              <main className="light_blue">
+              <main className="main, light_blue">
                   <NoGo  message={this.state.message}
                       appGreenLight={this.state.appGreenLight}
                   />
@@ -100,6 +100,7 @@ function loadScript(url) {
     script.src = url;
     script.async = true;
     script.defer = true;
+    //basically, make sure our script is the first one
     index.parentNode.insertBefore(script, index);
 }
 
