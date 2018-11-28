@@ -6,14 +6,22 @@ class FilterPanel extends Component {
   componentDidMount = () => {
   }
 
+  updateTipList(e) {
+      console.log("The filter selection was changed.");
+      e.stopPropagation();//TODO: compare stopPropagation to preventDefault
+  }
+
+
   render(){
       console.log(`FilterPanel component rendered.`);
       return (
-          <nav className="drawer, dark_blue">
+          <nav className="drawer, dark_blue"
+              id="drawer"
+          >
               <div className="drawer-filter-options">
                   <select id="drawer-filter-selector"
                       name="drawer-filter-selected-category"
-                      onChange="updateTipList()"
+                      onChange={this.updateTipList}
                   >
                       <option value="all">All Categories</option>
                       <option value="bbq">Eat BBQ</option>
