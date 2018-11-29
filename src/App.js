@@ -16,9 +16,11 @@ library.add(faBars);
 class App extends Component {
 
   state = {
+      map: {},
       markers: [{}],
       activeMarkers: [{}],
       drawerIsOpen: false,
+      dfwTips: [],
       message: "Nothing to say yet.",
       appGreenLight: true
   }
@@ -28,18 +30,18 @@ class App extends Component {
       //TODO: determine if class contains open
       // and if we can set   this.state.drawerIsOpen accordingly
 
-
-      //Render plain map with known center using async script outside of React
-      this.renderMap();
       //Get tips from a json API 'dfwTipsAPI'
       fetch('https://rudimusmaximus.github.io/dfwTips/dfwTipsAPI.json')
           .then(Utilities.status)
           .then(Utilities.json)
           .then(data => {
-              //Make map markers from the tips information
               console.log(`dfwTips Request succeeded with JSON response: `, data);
-              //TODO: make markers from these tips
-              //TODO: make the map one time at load
+              //load the tips so we can make markers from them
+              this.setState({dfwTips: data});
+              console.log(`dfwTips data loaded into state.`);
+              //Render centered map
+              //Load it with markers made from the tips fetched above
+              this.renderMap();
           })
           .catch(error => {
               let eMessage =
@@ -48,11 +50,12 @@ class App extends Component {
               this.setState({message: eMessage});
               this.setState({appGreenLight: false});
           });
-
   }
   setInitialDrawerState = () => {
       //need to read class (called after mounted) and
       //if contained, set drawerIsOpen to match
+      //TODO: review. setting with class from call back triggered in
+      //child component.
   }
   toggleDrawerState = () => {
       this.setState({
@@ -64,13 +67,35 @@ class App extends Component {
   renderMap = () => {
       //run script tag from outside of React
       loadScript('https://maps.googleapis.com/maps/api/js?key='+
-      'AIzaSyBQF4afYXb3lcv9KcI6BforUA1YfFBWank&v=3&callback=initMap');
+      'AIzaSyBQF4afYXb3lcv9KcI6BforUA1YfFBWank&callback=initMap');
       window.initMap = this.initMap;
   }
   initMap = () => {
-      let map = new window.google.maps.Map(document.getElementById('map'),{
+      // create map with starting center and zoom
+      const map = new window.google.maps.Map(document.getElementById('map'),{
           center: {lat: 32.7603, lng: -97.047797},
-          zoom: 11
+          zoom: 10
+      });
+
+      // pop up info window
+      const infoWindow = new window.google.maps.InfoWindow();
+
+      //use our JSON api data to create markers
+      this.state.dfwTips.map((tip) => {
+          //content for the info window
+          const infoString = `${tip.location_name} wu-tang!`;
+          //TODO: p7 create better info window with tip data
+          const marker = new window.google.maps.Marker({
+              position: {lat: tip.lat, lng: tip.lng},
+              map: map,
+              title: tip.location_name
+          });
+          // handle marker click
+          marker.addListener('click', () => {
+              infoWindow.setContent(infoString);
+              infoWindow.open(map, marker);
+          });
+          return marker;
       });
   }
   render() {
