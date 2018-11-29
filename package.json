@@ -1,6 +1,6 @@
 {
   "name": "neighborhood_map",
-  "version": "0.1.4-popMapMarkers.1",
+  "version": "0.1.5",
   "private": true,
   "description": "FENDp7 - Neighborhood Map (React)",
   "repository": {
