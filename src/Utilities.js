@@ -38,9 +38,9 @@ export const json = response => {
 //     index.parentNode.insertBefore(script, index);
 // };
 
-export const loadGoogleMapsPromise = () => {
-    return new Promise((resolve, reject) => {
-        window.resolveGoogleMapsPromise = () => {
+export function loadGoogleMapsPromise () {
+    return new Promise(function(resolve, reject) {
+        window.resolveGoogleMapsPromise = function() {
             resolve(window.google);
             //clean up
             delete window.resolveGoogleMapsPromise;
@@ -52,4 +52,4 @@ export const loadGoogleMapsPromise = () => {
         script.async = true;
         document.body.appendChild(script);
     });
-};
+}

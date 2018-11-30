@@ -49,14 +49,19 @@ class App extends Component {
                       let google = moreData[0];//the first return (only one for now)
                       this.google = google; //keep google related out of state
                       // this.markers = [];
+                      //Load it with markers made from the tips fetched above
+                      // this.renderMap();
+                      window.initMapWithMarkers = this.initMapWithMarkers;
+                      this.initMapWithMarkers();
+                      console.log(`Map rendered.`);
                   });
 
               //Render centered map
               //Load it with markers made from the tips fetched above
-              this.renderMap();
+              // this.renderMap();
               // window.initMapWithMarkers = this.initMapWithMarkers;
-              this.initMapWithMarkers();
-              console.log(`Map rendered.`);
+              // this.initMapWithMarkers();
+              // console.log(`Map rendered.`);
           })
           .catch(error => {
               let eMessage =
@@ -86,12 +91,12 @@ class App extends Component {
           this.state.drawerIsOpen);
   }
 
-  renderMap = () => {
-  //     //load google maps with call back for location, markers, and infor windows
-  //     Utilities.loadScript('https://maps.googleapis.com/maps/api/js?key=' +
-  //     'AIzaSyBQF4afYXb3lcv9KcI6BforUA1YfFBWank&callback=initMapWithMarkers');
-      window.initMapWithMarkers = this.initMapWithMarkers;
-  }
+  // renderMap = () => {
+  // //     //load google maps with call back for location, markers, and infor windows
+  // //     Utilities.loadScript('https://maps.googleapis.com/maps/api/js?key=' +
+  // //     'AIzaSyBQF4afYXb3lcv9KcI6BforUA1YfFBWank&callback=initMapWithMarkers');
+  //     window.initMapWithMarkers = this.initMapWithMarkers;
+  // }
   onFilterChange = (newValue) => {
 
       this.setState((state) => {
@@ -142,7 +147,8 @@ class App extends Component {
                   lng: tip.lng
               },
               map: map,
-              title: tip.location_name
+              title: tip.location_name,
+              animation: window.google.maps.Animation.DROP
           });
           // handle marker click
           marker.addListener('click', () => {
