@@ -26,6 +26,7 @@ class App extends Component {
   }
 
   componentDidMount = () => {
+      this.realFilterValue = "all";//see lesson learned notes 13
       console.log(`React App did mount...checking drawer state.`);
       //TODO: determine if class contains open
       // and if we can set   this.state.drawerIsOpen accordingly
@@ -98,13 +99,15 @@ class App extends Component {
   //     window.initMapWithMarkers = this.initMapWithMarkers;
   // }
   onFilterChange = (newValue) => {
-
+      this.realFilterValue = newValue;
       this.setState((state) => {
           return {selectedFilterValue: newValue};
       });
       console.log("selectedFilterValue changed in state to ", newValue);
       console.log("this.state.selectedFilterValue is ",
           this.state.selectedFilterValue);
+      console.log("Correcting, using this.realFilterValue which is ",
+          this.realFilterValue);
       this.initMapWithMarkers();
   }
   // now that google maps api is loaded
@@ -123,17 +126,20 @@ class App extends Component {
       const infoWindow = new window.google.maps.InfoWindow();
 
       //filter by active selection if necessary
+      let filterValue = this.state.selectedFilterValue;
+      filterValue = this.realFilterValue;//see note 13, managing locally
       let filteredTips = [];
-      if (this.state.selectedFilterValue === "all") { //use them all
+      if (filterValue === "all") { //use them all
           console.log(`Using all the tips from dfwTipsAPI`);
           filteredTips = this.state.dfwTips;
       } else { // Just get the ones in the active selection
           console.log(`Using tips from dfwTipsAPI with category `,
-              this.state.selectedFilterValue);
+              filterValue);
           filteredTips = this.state.dfwTips.filter(function(tip) {
-              return (tip.short_cat_code === this.state.selectedFilterValue);
+              return (tip.short_cat_key === filterValue);
           });
           console.log(`The filteredTips are `, filteredTips);
+          console.log(`The this.state.dfwTips were `, this.state.dfwTips);
       }
       //use our JSON api data to create markers
       console.log(`Dropping markers`);
