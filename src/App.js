@@ -14,22 +14,21 @@ import { faBars } from '@fortawesome/free-solid-svg-icons';
 library.add(faBars);
 
 class App extends Component {
-
   state = {
       map: {},
       markers: [{}],
       activeMarkers: [{}],
       drawerIsOpen: false,
+      selectedFilterValue: "all",
       dfwTips: [],
       message: "Nothing to say yet.",
       appGreenLight: true
   }
 
-  componentDidMount = () =>{
+  componentDidMount = () => {
       console.log(`React App did mount...checking drawer state.`);
       //TODO: determine if class contains open
       // and if we can set   this.state.drawerIsOpen accordingly
-
       //Get tips from a json API 'dfwTipsAPI'
       fetch('https://rudimusmaximus.github.io/dfwTips/dfwTipsAPI.json')
           .then(Utilities.status)
@@ -37,56 +36,111 @@ class App extends Component {
           .then(data => {
               console.log(`dfwTips Request succeeded with JSON response: `, data);
               //load the tips so we can make markers from them
-              this.setState({dfwTips: data});
+              this.setState((state) => {
+                  return { dfwTips: data };
+              });
               console.log(`dfwTips data loaded into state.`);
+              let googleMapsPromise = Utilities.loadGoogleMapsPromise();
+              Promise.all([
+                  googleMapsPromise
+                  // future additional 3rd party info apis
+              ])
+                  .then(moreData => {
+                      let google = moreData[0];//the first return (only one for now)
+                      this.google = google; //keep google related out of state
+                      // this.markers = [];
+                  });
+
               //Render centered map
               //Load it with markers made from the tips fetched above
               this.renderMap();
+              // window.initMapWithMarkers = this.initMapWithMarkers;
+              this.initMapWithMarkers();
+              console.log(`Map rendered.`);
           })
           .catch(error => {
               let eMessage =
-              'We could not reach the dfwTipsAPI we need to make map markers.';
+          'Problem loading APIs';
               console.log(`Request failed: `, error);
-              this.setState({message: eMessage});
-              this.setState({appGreenLight: false});
+              this.setState((state) => {
+                  return { message: eMessage };
+              });
+              this.setState((state) => {
+                  return { appGreenLight: false };
+              });
           });
   }
+
   setInitialDrawerState = () => {
       //need to read class (called after mounted) and
       //if contained, set drawerIsOpen to match
       //TODO: review. setting with class from call back triggered in
       //child component.
   }
+
   toggleDrawerState = () => {
-      this.setState({
-          drawerIsOpen: !this.state.drawerIsOpen
+      this.setState((state) => {
+          return { drawerIsOpen: !this.state.drawerIsOpen };
       });
       console.log("App's toggleDrawerState just set drawerIsOpen to: ",
           this.state.drawerIsOpen);
   }
+
   renderMap = () => {
-      //run script tag from outside of React
-      loadScript('https://maps.googleapis.com/maps/api/js?key='+
-      'AIzaSyBQF4afYXb3lcv9KcI6BforUA1YfFBWank&callback=initMap');
-      window.initMap = this.initMap;
+  //     //load google maps with call back for location, markers, and infor windows
+  //     Utilities.loadScript('https://maps.googleapis.com/maps/api/js?key=' +
+  //     'AIzaSyBQF4afYXb3lcv9KcI6BforUA1YfFBWank&callback=initMapWithMarkers');
+      window.initMapWithMarkers = this.initMapWithMarkers;
   }
-  initMap = () => {
+  onFilterChange = (newValue) => {
+
+      this.setState((state) => {
+          return {selectedFilterValue: newValue};
+      });
+      console.log("selectedFilterValue changed in state to ", newValue);
+      console.log("this.state.selectedFilterValue is ",
+          this.state.selectedFilterValue);
+      this.initMapWithMarkers();
+  }
+  // now that google maps api is loaded
+  initMapWithMarkers = () => {
+      console.log(`Running initMapWithMarkers`);
       // create map with starting center and zoom
-      const map = new window.google.maps.Map(document.getElementById('map'),{
-          center: {lat: 32.7603, lng: -97.047797},
+      const map = new window.google.maps.Map(document.getElementById('map'), {
+          center: {
+              lat: 32.7603,
+              lng: -97.047797
+          },
           zoom: 10
       });
 
       // pop up info window
       const infoWindow = new window.google.maps.InfoWindow();
 
+      //filter by active selection if necessary
+      let filteredTips = [];
+      if (this.state.selectedFilterValue === "all") { //use them all
+          console.log(`Using all the tips from dfwTipsAPI`);
+          filteredTips = this.state.dfwTips;
+      } else { // Just get the ones in the active selection
+          console.log(`Using tips from dfwTipsAPI with category `,
+              this.state.selectedFilterValue);
+          filteredTips = this.state.dfwTips.filter(function(tip) {
+              return (tip.short_cat_code === this.state.selectedFilterValue);
+          });
+          console.log(`The filteredTips are `, filteredTips);
+      }
       //use our JSON api data to create markers
-      this.state.dfwTips.map((tip) => {
+      console.log(`Dropping markers`);
+      filteredTips.map((tip) => {
           //content for the info window
           const infoString = `${tip.location_name} wu-tang!`;
           //TODO: p7 create better info window with tip data
           const marker = new window.google.maps.Marker({
-              position: {lat: tip.lat, lng: tip.lng},
+              position: {
+                  lat: tip.lat,
+                  lng: tip.lng
+              },
               map: map,
               title: tip.location_name
           });
@@ -100,19 +154,23 @@ class App extends Component {
   }
   render() {
       return (
-          <div id="body-two">
-              <FilterPanel />
-              <main className="main, light_blue">
-                  <NoGo  message={this.state.message}
-                      appGreenLight={this.state.appGreenLight}
+          <div id = "body-two">
+              <FilterPanel
+                  onFilterChange={this.onFilterChange}
+              />
+              <main className = "main, light_blue">
+                  <NoGo message = { this.state.message }
+                      appGreenLight = { this.state.appGreenLight }
                   />
-                  <HamburgerBar drawerIsOpen={this.state.drawerIsOpen}
-                      toggleDrawerState={this.state.toggleDrawerState}
+                  <HamburgerBar drawerIsOpen = { this.state.drawerIsOpen }
+                      toggleDrawerState = { this.state.toggleDrawerState }
                   />
-                  <div id="map"></div>
-                  <footer className="footer" id="footer">
-                      <a className="footer-link"
-                          href="https://github.com/rudimusmaximus/dfwTips"
+                  <div id = "map"> </div>
+                  <footer className = "footer"
+                      id = "footer"
+                  >
+                      <a className = "footer-link"
+                          href = "https://github.com/rudimusmaximus/dfwTips"
                       >featuring dfwTips
                       </a>
                   </footer>
@@ -120,26 +178,6 @@ class App extends Component {
           </div>
       );
   }
-}
-// removed                   <MapMaker
-//                      markers={this.state.activeMarkers}
-//                />
-
-/**
- * Integrates Google Maps into the react app without any external components
- * credit to Elharony walk through video
- * https://www.youtube.com/watch?v=W5LhLZqj76s
- * for the excellent approach. Also used https://snazzymaps.com/build-a-map for
- * cetner lat long, zoom level, and styling inspirations.
- */
-function loadScript(url) {
-    let index = window.document.getElementsByTagName("script")[0];
-    let script = window.document.createElement("script");
-    script.src = url;
-    script.async = true;
-    script.defer = true;
-    //basically, make sure our script is the first one
-    index.parentNode.insertBefore(script, index);
 }
 
 export default App;
