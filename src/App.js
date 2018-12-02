@@ -34,8 +34,10 @@ class App extends Component {
    */
   componentDidMount = () => {
       this.activeMarkerStack = [];
+      this.infoContentStack = [];
       this.filteredTips = [];
       this.realFilterValue = "all";//see lesson learned notes 13
+
       console.log(`React App did mount...checking drawer state.`);
 
       //Get tips from a json API 'dfwTipsAPI'
@@ -125,7 +127,7 @@ class App extends Component {
   initMapWithMarkers = () => {
       console.log(`Running initMapWithMarkers`);
       // create map with starting center and zoom
-      const map = new window.google.maps.Map(document.getElementById('map'), {
+      this.map = new window.google.maps.Map(document.getElementById('map'), {
           center: {
               lat: 32.7603,
               lng: -97.047797
@@ -135,7 +137,7 @@ class App extends Component {
       });
 
       // pop up info window
-      const infoWindow = new window.google.maps.InfoWindow();
+      this.infoWindow = new window.google.maps.InfoWindow();
 
       //filter by active selection if necessary
       let filterValue = this.state.selectedFilterValue;
@@ -176,21 +178,21 @@ class App extends Component {
           //inspired by project code 5 being stylish course material
           var droppedIcon = Utilities.makeMarkerIcon('0091ff');
           var mousedOverIcon = Utilities.makeMarkerIcon('FFFF24');
-          //TODO: p7 create better info window with tip data
           const marker = new window.google.maps.Marker({
               position: {
                   lat: tip.lat,
                   lng: tip.lng
               },
-              map: map,
+              map: this.map,
               title: tip.location_name,
               animation: window.google.maps.Animation.DROP,
               icon: droppedIcon,
               id: tip.short_name_key
           });
-
           this.activeMarkerStack.push(marker);//save marker to list
-
+          this.infoContentStack.push({id: marker.id,
+              contentString: infoString
+          });
           //setup marker event handlers
           marker.addListener(`mouseover`, function () {
               this.setIcon(mousedOverIcon);
@@ -199,8 +201,8 @@ class App extends Component {
               this.setIcon(droppedIcon);
           });
           marker.addListener('click', () => {
-              infoWindow.setContent(infoString);
-              infoWindow.open(map, marker);
+              this.infoWindow.setContent(infoString);
+              this.infoWindow.open(this.map, marker);
           });
           return null;
       });
@@ -213,41 +215,51 @@ class App extends Component {
    * It replicates the click action of a marker click when same marker is clicked
    * as listing in filter panel
    */
-  // panelListItemClick = (panelMarkerListing) => {
-  //     let marker = this.activeMarkerStack.filter(m => m.id === tip.id)[0];
-  //     console.log(marker);
-  //     // const infoWindow = new window.google.maps.InfoWindow();
-  //     infoWindow.setContent(infoString);
-  //     infoWindow.open(map, marker);
-  //     // console.log(this.activeMarkerStack);
-  // }
-  render() {
-      return (
-          <div id = "body-two">
-              <FilterPanel
-                  onFilterChange={this.onFilterChange}
-                  activeMarkerStack={this.state.activeMarkerStack}
-              />
-              <main className = "main, light_blue">
-                  <NoGo message = { this.state.message }
-                      appGreenLight = { this.state.appGreenLight }
-                  />
-                  <HamburgerBar drawerIsOpen = { this.state.drawerIsOpen }
-                      toggleDrawerState = { this.state.toggleDrawerState }
-                  />
-                  <div id = "map"> </div>
-                  <footer className = "footer"
-                      id = "footer"
-                  >
-                      <a className = "footer-link"
-                          href = "https://github.com/rudimusmaximus/dfwTips"
-                      >featuring dfwTips
-                      </a>
-                  </footer>
-              </main>
-          </div>
-      );
-  }
+   onFilteredTipListItemClick = (m) => {//todo: or should i pass the whole listing?
+       // const infoWindow = new window.google.maps.InfoWindow();
+
+       //get info content for this marker
+       const localContent = this.infoContentStack.filter(c => {
+           return c.id === m.id;
+       });
+       //animate the right marker
+       // let marker = this.activeMarkerStack.filter(m => m.id === markerId)[0];
+       console.log(`App onFilteredTipListItemClick with this marker `, m);
+       this.infoWindow.setContent(localContent);
+
+       this.infoWindow.open(this.map, m);
+       // console.log(this.activeMarkerStack);
+   }
+
+   render() {
+       return (
+           <div id = "body-two">
+               <FilterPanel
+                   onFilterChange={this.onFilterChange}
+                   onFilteredTipListItemClick={this.onFilteredTipListItemClick}
+                   // activeMarkerStack={this.state.activeMarkerStack}
+                   activeMarkerStack={this.activeMarkerStack}
+               />
+               <main className = "main, light_blue">
+                   <NoGo message = { this.state.message }
+                       appGreenLight = { this.state.appGreenLight }
+                   />
+                   <HamburgerBar drawerIsOpen = { this.state.drawerIsOpen }
+                       toggleDrawerState = { this.state.toggleDrawerState }
+                   />
+                   <div id = "map"> </div>
+                   <footer className = "footer"
+                       id = "footer"
+                   >
+                       <a className = "footer-link"
+                           href = "https://github.com/rudimusmaximus/dfwTips"
+                       >featuring dfwTips
+                       </a>
+                   </footer>
+               </main>
+           </div>
+       );
+   }
 }
 
 export default App;

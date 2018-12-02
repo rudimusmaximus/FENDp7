@@ -23,11 +23,18 @@ class FilterPanel extends Component {
       ` FilterPanel says tell state change to `, e.target.value);
       this.props.onFilterChange(e.target.value);
   }
-
+  /**
+   * It
+   *
+   */
+  filteredTipListItemClick = (marker) => {
+      console.log(`You clicked a filteredTipListItemClick with this marker `, marker);
+      // this.props.onFilteredTipListItemClick(marker);//TODO: YOUARE here
+  }
   render(){
-      // reset sidepanel list to avoid a ever growing listing
-      const ul = window.document.getElementById('filtered-tip-list');
-      // ul.innerHTML = '';
+      // // reset sidepanel list to avoid a ever growing listing
+      // const ul = window.document.getElementById('filtered-tip-list');
+      // // ul.innerHTML = '';
 
       console.log(`FilterPanel component rendered; Filtered tips are `,
           this.props.activeMarkerStack);
@@ -51,9 +58,11 @@ class FilterPanel extends Component {
                   {
                       this.props.activeMarkerStack &&
                     this.props.activeMarkerStack.length > 0 &&
-                    this.props.activeMarkerStack.map((m, index) => (
-                        <li key={index} className="filtered-tip-list-item">
-                            {m.title}
+                    this.props.activeMarkerStack.map((m) => (
+                        <li key={m.id}
+                            className="filtered-tip-list-item"
+                            onClick={this.filteredTipListItemClick(m)}
+                        >{m.title}
                         </li>
                     ))
                   }
