@@ -1,5 +1,9 @@
 import React, { Component } from 'react';
 
+/**
+ * A class that presents basic/'graceful' error message to the user
+ *
+ */
 class NoGo extends Component {
   state = {}
 
