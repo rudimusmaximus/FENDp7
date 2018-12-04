@@ -17,16 +17,23 @@ library.add(faBars);
  */
 class App extends Component {
   state = {
+      message: "Nothing to say yet.",
+      appGreenLight: true,
+      selectedFilterValue: "all",
+      dfwTips: [],
+
       map: {},
       markers: [{}],
       activeMarkers: [{}],
       drawerIsOpen: false,
-      selectedFilterValue: "all",
-      dfwTips: [],
-      message: "Nothing to say yet.",
-      appGreenLight: true,
       activeMarkerStack: [],
       filteredTip: [],
+      //TODO: maybe set a default set of filteredTips
+      // since title will be same as marker title
+      // pass to panel for initial render
+      //verify order is state > render > did Mount > other
+      //well when map is made is
+
   }
   /**
    * A lifecycle method that run once per lifecycle after this component and all
@@ -229,6 +236,8 @@ class App extends Component {
 
        this.infoWindow.open(this.map, m);
        // console.log(this.activeMarkerStack);
+       // // Force a render with a simulated state change
+       // this.setState({ state: this.state });
    }
 
    render() {
@@ -239,6 +248,7 @@ class App extends Component {
                    onFilteredTipListItemClick={this.onFilteredTipListItemClick}
                    // activeMarkerStack={this.state.activeMarkerStack}
                    activeMarkerStack={this.activeMarkerStack}
+                   liveFilterCategory={this.state.selectedFilterValue}
                />
                <main className = "main, light_blue">
                    <NoGo message = { this.state.message }

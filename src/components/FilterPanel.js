@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+// const shortid = require('shortid');
+import shortid from 'shortid';
 
 /**
  * A class that present a selection of categories from with which to filter
@@ -19,6 +21,10 @@ class FilterPanel extends Component {
    *
    */
   handleFilterChange = (e) => {
+      // // Force a render with a simulated state change
+      // this.setState({ state: this.state });
+      this.forceUpdate();
+
       console.log(`The filter selection was changed.`+
       ` FilterPanel says tell state change to `, e.target.value);
       this.props.onFilterChange(e.target.value);
@@ -59,7 +65,7 @@ class FilterPanel extends Component {
                       this.props.activeMarkerStack &&
                     this.props.activeMarkerStack.length > 0 &&
                     this.props.activeMarkerStack.map((m) => (
-                        <li key={m.id}
+                        <li key={ shortid.generate() }
                             className="filtered-tip-list-item"
                             onClick={this.filteredTipListItemClick(m)}
                         >{m.title}
