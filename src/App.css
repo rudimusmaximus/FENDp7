@@ -49,6 +49,8 @@ body {
 /* navigation drawer styling */
 nav {
   width: 300px;
+  max-width: 100%;
+  z-index: 100;
   position: absolute;
 
   /* This trasform moves the drawer off canvas. */
@@ -236,4 +238,18 @@ select {
 /* for marker info windows */
 em {
   font-weight: bold;
+}
+
+/* List and listing of filter panel */
+.list {
+  /* margin: 10px; */
+  /* background-color: #eee; */
+}
+
+.list li {
+  border: 1px solid #bbb;
+  /* font-size: 1.2em; */
+  text-decoration: none;
+  padding: 5px;
+  /* color: #333; */
 }
