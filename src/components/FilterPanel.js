@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 // const shortid = require('shortid');
-import shortid from 'shortid';
+// import shortid from 'shortid';
+import List from './List';
+import PropTypes from 'prop-types';
 
 /**
  * A class that present a selection of categories from with which to filter
@@ -41,9 +43,8 @@ class FilterPanel extends Component {
       // // reset sidepanel list to avoid a ever growing listing
       // const ul = window.document.getElementById('filtered-tip-list');
       // // ul.innerHTML = '';
-
       console.log(`FilterPanel component rendered; Filtered tips are `,
-          this.props.activeMarkerStack);
+          this.props.filteredTips);
       return (
           <nav className="drawer, dark_blue"
               id="drawer"
@@ -61,22 +62,16 @@ class FilterPanel extends Component {
                   </select>
               </div>
               <ul id="filtered-tip-list" className="filtered-tip-list">
-                  {
-                      this.props.activeMarkerStack &&
-                    this.props.activeMarkerStack.length > 0 &&
-                    this.props.activeMarkerStack.map((m) => (
-                        <li key={ shortid.generate() }
-                            className="filtered-tip-list-item"
-                            onClick={this.filteredTipListItemClick(m)}
-                        >{m.title}
-                        </li>
-                    ))
-                  }
+                  <List filteredTips={ this.props.filteredTips }/>
               </ul>
           </nav>
       );
   }
 
 }
+
+List.propTypes = {
+    filteredTips: PropTypes.array.isRequired
+};
 
 export default FilterPanel;

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import './App.css';
 import NoGo from './components/NoGo';
 import FilterPanel from './components/FilterPanel';
@@ -21,6 +22,7 @@ class App extends Component {
       appGreenLight: true,
       selectedFilterValue: "all",
       dfwTips: [],
+      filteredTips: [],
 
       map: {},
       markers: [{}],
@@ -54,10 +56,16 @@ class App extends Component {
           .then(data => {
               console.log(`dfwTips Request succeeded with JSON response: `, data);
 
-              //load the tips so we can make markers from them
-              this.setState((state) => {
-                  return { dfwTips: data };
+              // create a new "state" object without mutating
+              // the original state object. see readme for
+              // credit to for this binding/loading data approach
+              //TODO:              // https://www.andreasreiterer.at/connect-react-app-rest-api/
+              const newState = Object.assign({}, this.state, {
+                  dfwTips: data
               });
+              //load the tips so we can make markers from them
+              //also triggers new render
+              this.setState(newState);
               console.log(`dfwTips data loaded into state.`);
               let googleMapsPromise = Utilities.loadGoogleMapsPromise();
               Promise.all([
@@ -162,9 +170,10 @@ class App extends Component {
           console.log(`The this.filteredTips are `, this.filteredTips);
           console.log(`The this.state.dfwTips were `, this.state.dfwTips);
       }
-      this.setState((state) => {
-          return { filteredTips: this.filteredTips };
+      const newStateTwo = Object.assign({}, this.state, {
+          filteredTips: this.filteredTips
       });
+      this.setState(newStateTwo);
 
       //use our JSON api data to create markers
       console.log(`Dropping markers`);
@@ -246,6 +255,8 @@ class App extends Component {
                <FilterPanel
                    onFilterChange={this.onFilterChange}
                    onFilteredTipListItemClick={this.onFilteredTipListItemClick}
+                   filteredTips={this.state.filteredTips}
+
                    // activeMarkerStack={this.state.activeMarkerStack}
                    activeMarkerStack={this.activeMarkerStack}
                    liveFilterCategory={this.state.selectedFilterValue}
@@ -271,5 +282,9 @@ class App extends Component {
        );
    }
 }
+
+FilterPanel.propTypes = {
+    filteredTips: PropTypes.array.isRequired
+};
 
 export default App;
