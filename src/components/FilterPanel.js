@@ -25,7 +25,7 @@ class FilterPanel extends Component {
   handleFilterChange = (e) => {
       // // Force a render with a simulated state change
       // this.setState({ state: this.state });
-      this.forceUpdate();
+      // this.forceUpdate();
 
       console.log(`The filter selection was changed.`+
       ` FilterPanel says tell state change to `, e.target.value);

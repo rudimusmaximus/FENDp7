@@ -26,7 +26,6 @@ class App extends Component {
 
       map: {},
       markers: [{}],
-      activeMarkers: [{}],
       drawerIsOpen: false,
       activeMarkerStack: [],
       filteredTip: [],
@@ -94,7 +93,9 @@ class App extends Component {
               });
           });
   }
-
+  // onClearStateActiveMarkerStack = () => {
+  //     this.setState({ activeMarkerStack: [] });
+  // }
   /**
    * It
    *
@@ -222,6 +223,9 @@ class App extends Component {
           });
           return null;
       });
+      // this.onClearStateActiveMarkerStack();
+      // this.forceUpdate();
+
       this.setState((state) => {
           return { activeMarkerStack: this.activeMarkerStack };
       });
