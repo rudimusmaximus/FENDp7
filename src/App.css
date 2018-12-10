@@ -97,6 +97,10 @@ select {
   background-color: #099dd9;
 }
 
+ul {
+  list-style-type: none;
+}
+
 .filtered-tip-list {
   padding: 10px;
   font-size: 14px;
