@@ -6,10 +6,9 @@ import FilterPanel from './components/FilterPanel';
 import HamburgerBar from './components/HamburgerBar';
 import * as Utilities from './Utilities';
 // Load our icons
-// import ReactDOM from 'react-dom';
 import { library } from '@fortawesome/fontawesome-svg-core';
-// import { fab } from '@fortawesome/free-brands-svg-icons';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
+// import { fab } from '@fortawesome/free-brands-svg-icons';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 library.add(faBars);
 
@@ -29,12 +28,6 @@ class App extends Component {
       drawerIsOpen: false,
       activeMarkerStack: [],
       filteredTip: [],
-      //TODO: maybe set a default set of filteredTips
-      // since title will be same as marker title
-      // pass to panel for initial render
-      //verify order is state > render > did Mount > other
-      //well when map is made is
-
   }
   /**
    * A lifecycle method that run once per lifecycle after this component and all
@@ -46,14 +39,14 @@ class App extends Component {
       this.filteredTips = [];
       this.realFilterValue = "all";//see lesson learned notes 13
 
-      console.log(`React App did mount...checking drawer state.`);
+      // console.log(`React App did mount...checking drawer state.`);
 
       //Get tips from a json API 'dfwTipsAPI'
       fetch('https://rudimusmaximus.github.io/dfwTips/dfwTipsAPI.json')
           .then(Utilities.status)
           .then(Utilities.json)
           .then(data => {
-              console.log(`dfwTips Request succeeded with JSON response: `, data);
+              // console.log(`dfwTips Request succeeded with JSON response: `, data);
 
               // create a new "state" object without mutating
               // the original state object. see readme for
@@ -65,7 +58,7 @@ class App extends Component {
               //load the tips so we can make markers from them
               //also triggers new render
               this.setState(newState);
-              console.log(`dfwTips data loaded into state.`);
+              // console.log(`dfwTips data loaded into state.`);
               let googleMapsPromise = Utilities.loadGoogleMapsPromise();
               Promise.all([
                   googleMapsPromise
@@ -93,9 +86,7 @@ class App extends Component {
               });
           });
   }
-  // onClearStateActiveMarkerStack = () => {
-  //     this.setState({ activeMarkerStack: [] });
-  // }
+
   /**
    * It
    *
@@ -108,7 +99,7 @@ class App extends Component {
   }
 
   /**
-   * It
+   * It //TODO: new prevState approach with functions outside of comp class
    *
    */
   toggleDrawerState = () => {
@@ -224,7 +215,6 @@ class App extends Component {
           return null;
       });
       // this.onClearStateActiveMarkerStack();
-      // this.forceUpdate();
 
       this.setState((state) => {
           return { activeMarkerStack: this.activeMarkerStack };

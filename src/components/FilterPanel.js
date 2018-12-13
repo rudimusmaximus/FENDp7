@@ -13,9 +13,7 @@ class FilterPanel extends Component {
   state = {
   }
   componentDidMount = () => {
-      console.log(`Filter Panel component mounted`);
-      // console.log("from filter panel, filtered list is ",
-      //     this.props.activeMarkerStack);
+      // console.log(`Filter Panel component mounted`);
   }
 
   /**
@@ -23,12 +21,8 @@ class FilterPanel extends Component {
    *
    */
   handleFilterChange = (e) => {
-      // // Force a render with a simulated state change
-      // this.setState({ state: this.state });
-      // this.forceUpdate();
-
-      console.log(`The filter selection was changed.`+
-      ` FilterPanel says tell state change to `, e.target.value);
+      // console.log(`The filter selection was changed.`+
+      // ` FilterPanel says tell state change to `, e.target.value);
       this.props.onFilterChange(e.target.value);
   }
   /**
@@ -40,11 +34,8 @@ class FilterPanel extends Component {
       // this.props.onFilteredTipListItemClick(marker);//TODO: YOUARE here
   }
   render(){
-      // // reset sidepanel list to avoid a ever growing listing
-      // const ul = window.document.getElementById('filtered-tip-list');
-      // // ul.innerHTML = '';
-      console.log(`FilterPanel component rendered; Filtered tips are `,
-          this.props.filteredTips);
+      // console.log(`FilterPanel component rendered; Filtered tips are `,
+      //     this.props.filteredTips);
       return (
           <nav className="drawer, dark_blue"
               id="drawer"

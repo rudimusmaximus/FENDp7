@@ -2,17 +2,16 @@ import React, { Component } from 'react';
 
 /**
  * A class that presents basic/'graceful' error message to the user
- *
  */
 class NoGo extends Component {
   state = {}
 
   render(){
       if (this.props.appGreenLight) {
-          console.log(`NoGo component rendered invisible/null. That's good.`);
+          // console.log(`NoGo component rendered invisible/null. That's good.`);
           return null;
       } else {
-          console.log(`NoGo component rendered. There was an error.`);
+          // console.log(`NoGo component rendered. There was an error.`);
           return (
               <div className="do_not_start_error">
                   <p className="error_intro">

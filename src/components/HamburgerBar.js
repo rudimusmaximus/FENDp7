@@ -11,13 +11,6 @@ class HamburgerBar extends Component {
   componentDidMount () {
   }
 
-  //TODO: perhaps it should rendor or return null based on a switch like
-  //the error componenet
-  //H2 make shown in that approach when bigg enough to show?
-  //wait....i think a requirement is that all components always show?
-  //in that case a width/max-width approach could work where max was % and width
-  //was say 300px!!!!!
-
   /**
    * It
    *
