@@ -99,8 +99,7 @@ class App extends Component {
   }
 
   /**
-   * It //TODO: new prevState approach with functions outside of comp class
-   *
+   * It toggles true false state of drawerIsOpen
    */
   toggleDrawerState = () => {
       this.setState((state) => {
@@ -111,19 +110,13 @@ class App extends Component {
   }
 
   /**
-   * It
-   *
+   * It updates the filter value in two places and runs the initMapWithMarkers
    */
   onFilterChange = (newValue) => {
       this.realFilterValue = newValue;
       this.setState((state) => {
           return {selectedFilterValue: newValue};
       });
-      console.log("selectedFilterValue changed in state to ", newValue);
-      console.log("this.state.selectedFilterValue is ",
-          this.state.selectedFilterValue);
-      console.log("Correcting, using this.realFilterValue which is ",
-          this.realFilterValue);
       this.initMapWithMarkers();
   }
 
@@ -225,22 +218,28 @@ class App extends Component {
    * It replicates the click action of a marker click when same marker is clicked
    * as listing in filter panel
    */
-   onFilteredTipListItemClick = (m) => {//todo: or should i pass the whole listing?
-       // const infoWindow = new window.google.maps.InfoWindow();
-
-       //get info content for this marker
-       const localContent = this.infoContentStack.filter(c => {
-           return c.id === m.id;
-       });
-       //animate the right marker
-       // let marker = this.activeMarkerStack.filter(m => m.id === markerId)[0];
-       console.log(`App onFilteredTipListItemClick with this marker `, m);
-       this.infoWindow.setContent(localContent);
-
-       this.infoWindow.open(this.map, m);
-       // console.log(this.activeMarkerStack);
-       // // Force a render with a simulated state change
-       // this.setState({ state: this.state });
+   onFilteredTipListItemClick = (clickItemName) => {//todo: was m, how to get m from this
+       // if (this.activeMarkerStack.length > 0 && clickItemName){
+       // // const infoWindow = new window.google.maps.InfoWindow();
+       // //get the right marker with only the item className
+       //     console.log(`this activeMarkerStack is `, this.activeMarkerStack);
+       //     let m = this.activeMarkerStack.filter(m => m.title === clickItemName)[0];
+       //     console.log(`m is `, m);
+       //     //get info content for this marker
+       //     const localContent = this.infoContentStack.filter(c => {
+       //         return c.id === m.id;
+       //     })[0];
+       //     console.log(`localContent is `, localContent);
+       //     //animate the right marker
+       //     // let marker = this.activeMarkerStack.filter(m => m.id === markerId)[0];
+       //     console.log(`App onFilteredTipListItemClick with this marker `, m);
+       //     this.infoWindow.setContent(localContent.contentString);
+       //
+       //     this.infoWindow.open(this.map, m);
+       // // console.log(this.activeMarkerStack);
+       // // // Force a render with a simulated state change
+       // // this.setState({ state: this.state });
+       // }
    }
 
    render() {

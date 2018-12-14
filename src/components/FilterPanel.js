@@ -53,7 +53,11 @@ class FilterPanel extends Component {
                   </select>
               </div>
               <ul id="filtered-tip-list" className="filtered-tip-list">
-                  <List filteredTips={ this.props.filteredTips }/>
+                  <List filteredTips={ this.props.filteredTips }
+                      onFilteredTipListItemClick={
+                          this.props.onFilteredTipListItemClick}
+
+                  />
               </ul>
           </nav>
       );

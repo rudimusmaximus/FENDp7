@@ -10,6 +10,9 @@ function List(props){
                 <Listing
                     key={l.short_name_key}
                     name={l.location_name}
+                    onFilteredTipListItemClick={
+                        props.onFilteredTipListItemClick}
+
                 />)}
         </div>
     );
