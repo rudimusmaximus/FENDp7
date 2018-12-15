@@ -19,7 +19,8 @@ function List(props){
 }
 
 List.propTypes = {
-    filteredTips: PropTypes.array.isRequired
+    filteredTips: PropTypes.array.isRequired,
+    onFilteredTipListItemClick: PropTypes.func.isRequired
 };
 
 export default List;

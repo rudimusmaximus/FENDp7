@@ -4,14 +4,16 @@ import shortid from 'shortid';
 
 function Listing(props){
     return (
-        <li className="listing" key={shortid.generate()}
-            onClick={props.onFilteredTipListItemClick(props.name)}
-        >{props.name}</li>
+        <div className="listing"
+            key={shortid.generate()}
+            onClick={ (e) => { props.onFilteredTipListItemClick(e.target.value); } }
+        >{props.name}</div>
     );
 }
 
 Listing.propTypes = {
-    name: PropTypes.string.isRequired
+    name: PropTypes.string.isRequired,
+    onFilteredTipListItemClick: PropTypes.func.isRequired
 };
 
 export default Listing;

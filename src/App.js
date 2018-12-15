@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import './App.css';
 import NoGo from './components/NoGo';
 import FilterPanel from './components/FilterPanel';
@@ -26,6 +26,7 @@ class App extends Component {
       map: {},
       markers: [{}],
       drawerIsOpen: false,
+      toggleDrawerState: false,
       activeMarkerStack: [],
       filteredTip: [],
   }
@@ -125,6 +126,8 @@ class App extends Component {
    * and information windows based on the tips retrieved
    */
   initMapWithMarkers = () => {
+      this.activeMarkerStack = [];
+
       console.log(`Running initMapWithMarkers`);
       // create map with starting center and zoom
       this.map = new window.google.maps.Map(document.getElementById('map'), {
@@ -225,13 +228,12 @@ class App extends Component {
        console.log(`handleListItemClick from Listing.js stateless function called for `, clickItemName);
        if (this.activeMarkerStack.length > 0 && clickItemName){
        //get the right marker with only the item className
-           console.log(`this activeMarkerStack is `, this.activeMarkerStack);
+           // console.log(`this activeMarkerStack is `, this.activeMarkerStack);
            let m = this.activeMarkerStack.filter(m => m.title === clickItemName)[0];
-           console.log(`m is `, m);
-           console.log(`App onFilteredTipListItemClick with this marker `, m);
+           // console.log(`m is `, m);
+           // console.log(`App onFilteredTipListItemClick with this marker `, m);
            //simulate a marker click, so it's event listener animated marker by opening
            //it's information window
-           //TODO: animate it's bounce?
            window.google.maps.event.trigger(m, 'click');
            //explore some call like the following or maybe m.setAnimation bounce for a few seconds
            //see https://developers.google.com/maps/documentation/javascript/reference/marker
@@ -248,7 +250,7 @@ class App extends Component {
                    filteredTips={this.state.filteredTips}
 
                    // activeMarkerStack={this.state.activeMarkerStack}
-                   activeMarkerStack={this.activeMarkerStack}
+                   activeMarkerStack={this.activeMarkerStack || []}
                    liveFilterCategory={this.state.selectedFilterValue}
                />
                <main className = "main, light_blue">
@@ -272,9 +274,5 @@ class App extends Component {
        );
    }
 }
-
-FilterPanel.propTypes = {
-    filteredTips: PropTypes.array.isRequired
-};
 
 export default App;

@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 /**
  * A class that presents basic/'graceful' error message to the user
@@ -24,4 +25,10 @@ class NoGo extends Component {
       }
   }
 }
+
+NoGo.propTypes = {
+    message: PropTypes.string,
+    appGreenLight: PropTypes.bool.isRequired
+};
+
 export default NoGo;

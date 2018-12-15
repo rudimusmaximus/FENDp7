@@ -65,8 +65,12 @@ class FilterPanel extends Component {
 
 }
 
-List.propTypes = {
-    filteredTips: PropTypes.array.isRequired
+FilterPanel.propTypes = {
+    onFilterChange: PropTypes.func.isRequired,
+    onFilteredTipListItemClick: PropTypes.func.isRequired,
+    filteredTips: PropTypes.array.isRequired,
+    activeMarkerStack: PropTypes.array.isRequired,
+    liveFilterCategory: PropTypes.string.isRequired
 };
 
 export default FilterPanel;

@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import PropTypes from 'prop-types';
 
 /**
  * A class that presents the title and menu icon from which to open
@@ -38,5 +39,10 @@ class HamburgerBar extends Component {
   }
 
 }
+
+HamburgerBar.propTypes = {
+    drawerIsOpen: PropTypes.bool.isRequired,
+    toggleDrawerState: PropTypes.bool.isRequired
+};
 
 export default HamburgerBar;
