@@ -9,10 +9,8 @@ class NoGo extends Component {
 
   render(){
       if (this.props.appGreenLight) {
-          // console.log(`NoGo component rendered invisible/null. That's good.`);
           return null;
       } else {
-          // console.log(`NoGo component rendered. There was an error.`);
           return (
               <div className="do_not_start_error">
                   <p className="error_intro">

@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import Listing from './Listing';
 
 function List(props){
-    console.log(`props are `, props);
     return (
         <div className="list">
             {props.filteredTips.map(l =>
@@ -12,7 +11,6 @@ function List(props){
                     name={l.location_name}
                     onFilteredTipListItemClick={
                         props.onFilteredTipListItemClick}
-
                 />)}
         </div>
     );

@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import PropTypes from 'prop-types';
 
 /**
  * A class that presents the title and menu icon from which to open
@@ -13,19 +12,20 @@ class HamburgerBar extends Component {
   }
 
   /**
-   * It
-   *
+   * It opens or closes the filter sidebar ONLY when it is not already opens
+   * becuase screen size allows
    */
-  handleClick(e,props) {
-      console.log(`The HamburgerBar has been clicked!`);
-      let testVar = document.querySelector('nav#drawer').classList.toggle('open');
-      console.log(testVar);
+  handleClick(e) {
+      // media queries keep sidebar open unless under a certain size
+      // when closed, activating will open or close
+      document.querySelector('nav#drawer').classList.toggle('open');
       e.stopPropagation();
   }
   render(){
-      console.log(`HamburgerBar component rendered.`);
       return (
-          <div className="hamburger-title">
+          <div className="hamburger-title"
+              onClick={this.handleClick}
+          >
               <FontAwesomeIcon
                   icon="bars"
                   color="#099dd9"
@@ -39,10 +39,5 @@ class HamburgerBar extends Component {
   }
 
 }
-
-HamburgerBar.propTypes = {
-    drawerIsOpen: PropTypes.bool.isRequired,
-    toggleDrawerState: PropTypes.bool.isRequired
-};
 
 export default HamburgerBar;

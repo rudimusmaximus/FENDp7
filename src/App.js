@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-// import PropTypes from 'prop-types';
 import './App.css';
 import NoGo from './components/NoGo';
 import FilterPanel from './components/FilterPanel';
@@ -8,8 +7,6 @@ import * as Utilities from './Utilities';
 // Load our icons
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
-// import { fab } from '@fortawesome/free-brands-svg-icons';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 library.add(faBars);
 
 /**
@@ -22,14 +19,9 @@ class App extends Component {
       selectedFilterValue: "all",
       dfwTips: [],
       filteredTips: [],
-
-      map: {},
-      markers: [{}],
-      drawerIsOpen: false,
-      toggleDrawerState: false,
       activeMarkerStack: [],
-      filteredTip: [],
   }
+
   /**
    * A lifecycle method that run once per lifecycle after this component and all
    * sub-components have rendered properly
@@ -40,19 +32,16 @@ class App extends Component {
       this.filteredTips = [];
       this.realFilterValue = "all";//see lesson learned notes 13
 
-      // console.log(`React App did mount...checking drawer state.`);
-
       //Get tips from a json API 'dfwTipsAPI'
       fetch('https://rudimusmaximus.github.io/dfwTips/dfwTipsAPI.json')
           .then(Utilities.status)
           .then(Utilities.json)
           .then(data => {
-              // console.log(`dfwTips Request succeeded with JSON response: `, data);
 
               // create a new "state" object without mutating
               // the original state object. see readme for
               // credit to for this binding/loading data approach
-              //TODO:              // https://www.andreasreiterer.at/connect-react-app-rest-api/
+              // https://www.andreasreiterer.at/connect-react-app-rest-api/
               const newState = Object.assign({}, this.state, {
                   dfwTips: data
               });
@@ -68,17 +57,14 @@ class App extends Component {
                   .then(moreData => {
                       let google = moreData[0];//the first return (only one for now)
                       this.google = google; //keep google related out of state
-                      // this.markers = [];
                       //Load it with markers made from the tips fetched above
                       window.initMapWithMarkers = this.initMapWithMarkers;
                       this.initMapWithMarkers();
-                      console.log(`Map rendered.`);
                   });
           })
           .catch(error => {
-              let eMessage =
-          'Problem loading APIs';
-              console.log(`Request failed: `, error);
+              let eMessage = 'Problem loading APIs';
+              // console.log(`Request failed: `, error);
               this.setState((state) => {
                   return { message: eMessage };
               });
@@ -86,28 +72,6 @@ class App extends Component {
                   return { appGreenLight: false };
               });
           });
-  }
-
-  /**
-   * It
-   *
-   */
-  setInitialDrawerState = () => {
-      //need to read class (called after mounted) and
-      //if contained, set drawerIsOpen to match
-      //TODO: review. setting with class from call back triggered in
-      //child component.
-  }
-
-  /**
-   * It toggles true false state of drawerIsOpen
-   */
-  toggleDrawerState = () => {
-      this.setState((state) => {
-          return { drawerIsOpen: !this.state.drawerIsOpen };
-      });
-      console.log("App's toggleDrawerState just set drawerIsOpen to: ",
-          this.state.drawerIsOpen);
   }
 
   /**
@@ -128,7 +92,6 @@ class App extends Component {
   initMapWithMarkers = () => {
       this.activeMarkerStack = [];
 
-      console.log(`Running initMapWithMarkers`);
       // create map with starting center and zoom
       this.map = new window.google.maps.Map(document.getElementById('map'), {
           center: {
@@ -147,7 +110,6 @@ class App extends Component {
       filterValue = this.realFilterValue;//see note 13, managing locally
       this.filteredTips = [];
       if (filterValue === "all") { //use them all
-          console.log(`Using all the tips from dfwTipsAPI`);
           this.filteredTips = this.state.dfwTips;
       } else { // Just get the ones in the active selection
           console.log(`Using tips from dfwTipsAPI with category `,
@@ -155,8 +117,6 @@ class App extends Component {
           this.filteredTips = this.state.dfwTips.filter(function(tip) {
               return (tip.short_cat_key === filterValue);
           });
-          console.log(`The this.filteredTips are `, this.filteredTips);
-          console.log(`The this.state.dfwTips were `, this.state.dfwTips);
       }
       const newStateTwo = Object.assign({}, this.state, {
           filteredTips: this.filteredTips
@@ -164,7 +124,6 @@ class App extends Component {
       this.setState(newStateTwo);
 
       //use our JSON api data to create markers
-      console.log(`Dropping markers`);
       this.filteredTips.map((tip) => {
           //content for the info window
           const infoString =
@@ -257,9 +216,7 @@ class App extends Component {
                    <NoGo message = { this.state.message }
                        appGreenLight = { this.state.appGreenLight }
                    />
-                   <HamburgerBar drawerIsOpen = { this.state.drawerIsOpen }
-                       toggleDrawerState = { this.state.toggleDrawerState }
-                   />
+                   <HamburgerBar />
                    <div id = "map"> </div>
                    <footer className = "footer"
                        id = "footer"

@@ -1,6 +1,4 @@
 import React, {Component} from 'react';
-// const shortid = require('shortid');
-// import shortid from 'shortid';
 import List from './List';
 import PropTypes from 'prop-types';
 
@@ -13,29 +11,16 @@ class FilterPanel extends Component {
   state = {
   }
   componentDidMount = () => {
-      // console.log(`Filter Panel component mounted`);
   }
 
   /**
-   * It
-   *
+   * It triggers the filter change method passed down
    */
   handleFilterChange = (e) => {
-      // console.log(`The filter selection was changed.`+
-      // ` FilterPanel says tell state change to `, e.target.value);
       this.props.onFilterChange(e.target.value);
   }
-  /**
-   * It
-   *
-   */
-  filteredTipListItemClick = (marker) => {
-      console.log(`You clicked a filteredTipListItemClick with this marker `, marker);
-      // this.props.onFilteredTipListItemClick(marker);//TODO: YOUARE here
-  }
+
   render(){
-      // console.log(`FilterPanel component rendered; Filtered tips are `,
-      //     this.props.filteredTips);
       return (
           <nav className="drawer, dark_blue"
               id="drawer"
@@ -56,7 +41,6 @@ class FilterPanel extends Component {
                   <List filteredTips={ this.props.filteredTips }
                       onFilteredTipListItemClick={
                           this.props.onFilteredTipListItemClick}
-
                   />
               </ul>
           </nav>
