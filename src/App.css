@@ -253,7 +253,7 @@ em {
   /* background-color: #eee; */
 }
 
-.list li {
+.list .listing {
   border: 1px solid #bbb;
 
   /* font-size: 1.2em; */

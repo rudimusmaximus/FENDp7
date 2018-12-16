@@ -6,7 +6,7 @@ function Listing(props){
     return (
         <div className="listing"
             key={shortid.generate()}
-            onClick={ (e) => { props.onFilteredTipListItemClick(e.target.value); } }
+            onClick={() => {props.onFilteredTipListItemClick(props.name);}}
         >{props.name}</div>
     );
 }

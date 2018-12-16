@@ -112,8 +112,6 @@ class App extends Component {
       if (filterValue === "all") { //use them all
           this.filteredTips = this.state.dfwTips;
       } else { // Just get the ones in the active selection
-          console.log(`Using tips from dfwTipsAPI with category `,
-              filterValue);
           this.filteredTips = this.state.dfwTips.filter(function(tip) {
               return (tip.short_cat_key === filterValue);
           });
@@ -166,37 +164,38 @@ class App extends Component {
           marker.addListener('click', () => {
               this.infoWindow.setContent(infoString);
               this.infoWindow.open(this.map, marker);
+              // if (marker.getAnimation() !== null) {
+              //     marker.setAnimation(null);
+              //     //set this logic to set all marker animation to null
+              //     //and to dropped icon color
+              //
+              // } else {
+              //     // marker.setAnimation(window.google.maps.Animation.BOUNCE);
+              //     marker.setIcon(mousedOverIcon);
+              // }
           });
           return null;
       });
-      // this.onClearStateActiveMarkerStack();
 
       this.setState((state) => {
           return { activeMarkerStack: this.activeMarkerStack };
       });
-  }
+  } //end initMapWithMarkers
 
   /**
    * It replicates the click action of a marker click when same marker is clicked
    * as listing in filter panel
    */
    onFilteredTipListItemClick = (clickItemName) => {
-       //getting called for each marker strangely
-       //TODO: convert to class component so we have state, modify onClick so
        //will be called from listing clicks
-       console.log(`handleListItemClick from Listing.js stateless function called for `, clickItemName);
        if (this.activeMarkerStack.length > 0 && clickItemName){
-       //get the right marker with only the item className
-           // console.log(`this activeMarkerStack is `, this.activeMarkerStack);
-           let m = this.activeMarkerStack.filter(m => m.title === clickItemName)[0];
-           // console.log(`m is `, m);
-           // console.log(`App onFilteredTipListItemClick with this marker `, m);
-           //simulate a marker click, so it's event listener animated marker by opening
-           //it's information window
+           //get the right marker with only the item click item name
+           //this matches the marker titles when they were created
+           let m = this.activeMarkerStack
+               .filter(m => m.title === clickItemName)[0];
+           //simulate a marker click, so it's event listener animates
+           //marker by opening it's information window
            window.google.maps.event.trigger(m, 'click');
-           //explore some call like the following or maybe m.setAnimation bounce for a few seconds
-           //see https://developers.google.com/maps/documentation/javascript/reference/marker
-           window.google.maps.event.trigger(m, 'bounce');
        }
    }
 
