@@ -164,15 +164,6 @@ class App extends Component {
           marker.addListener('click', () => {
               this.infoWindow.setContent(infoString);
               this.infoWindow.open(this.map, marker);
-              // if (marker.getAnimation() !== null) {
-              //     marker.setAnimation(null);
-              //     //set this logic to set all marker animation to null
-              //     //and to dropped icon color
-              //
-              // } else {
-              //     // marker.setAnimation(window.google.maps.Animation.BOUNCE);
-              //     marker.setIcon(mousedOverIcon);
-              // }
           });
           return null;
       });
@@ -186,7 +177,7 @@ class App extends Component {
    * It replicates the click action of a marker click when same marker is clicked
    * as listing in filter panel
    */
-   onFilteredTipListItemClick = (clickItemName) => {
+   onFilteredTipListItemClick = (clickItemName, e) => {
        //will be called from listing clicks
        if (this.activeMarkerStack.length > 0 && clickItemName){
            //get the right marker with only the item click item name
@@ -197,6 +188,11 @@ class App extends Component {
            //marker by opening it's information window
            window.google.maps.event.trigger(m, 'click');
        }
+       // media queries keep sidebar open unless under a certain size
+       // when closed, activating will open or close
+       document.querySelector('nav#drawer').classList.toggle('open');
+       e.stopPropagation();
+
    }
 
    render() {
