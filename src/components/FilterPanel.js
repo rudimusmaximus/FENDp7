@@ -1,19 +1,26 @@
 import React, {Component} from 'react';
+import List from './List';
+import PropTypes from 'prop-types';
 
+/**
+ * A class that present a selection of categories from with which to filter
+ * A clickalbe list of live marker titles represented on the map
+ * Clicking on the list animates the corresponding map marker
+ */
 class FilterPanel extends Component {
   state = {
   }
   componentDidMount = () => {
   }
 
-  updateTipList(e) {
-      console.log("The filter selection was changed.");
-      e.stopPropagation();//TODO: compare stopPropagation to preventDefault
+  /**
+   * It triggers the filter change method passed down
+   */
+  handleFilterChange = (e) => {
+      this.props.onFilterChange(e.target.value);
   }
 
-
   render(){
-      console.log(`FilterPanel component rendered.`);
       return (
           <nav className="drawer, dark_blue"
               id="drawer"
@@ -21,22 +28,33 @@ class FilterPanel extends Component {
               <div className="drawer-filter-options">
                   <select id="drawer-filter-selector"
                       name="drawer-filter-selected-category"
-                      onChange={this.updateTipList}
+                      onChange={this.handleFilterChange}
                   >
                       <option value="all">All Categories</option>
                       <option value="bbq">Eat BBQ</option>
-                      <option value="ent">Live Entertainment</option>
+                      <option value="liv">Live Entertainment</option>
                       <option value="mov">Watch a Movie</option>
                       <option value="air">Where`s The Airport</option>
                   </select>
               </div>
-              <ul className="filtered-tip-list">TODO: add li s filtered list
-                  <li className="filtered-tip-list-item">dfwTip One Example</li>
+              <ul id="filtered-tip-list" className="filtered-tip-list">
+                  <List filteredTips={ this.props.filteredTips }
+                      onFilteredTipListItemClick={
+                          this.props.onFilteredTipListItemClick}
+                  />
               </ul>
           </nav>
       );
   }
 
 }
+
+FilterPanel.propTypes = {
+    onFilterChange: PropTypes.func.isRequired,
+    onFilteredTipListItemClick: PropTypes.func.isRequired,
+    filteredTips: PropTypes.array.isRequired,
+    activeMarkerStack: PropTypes.array.isRequired,
+    liveFilterCategory: PropTypes.string.isRequired
+};
 
 export default FilterPanel;

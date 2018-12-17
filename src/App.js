@@ -3,143 +3,228 @@ import './App.css';
 import NoGo from './components/NoGo';
 import FilterPanel from './components/FilterPanel';
 import HamburgerBar from './components/HamburgerBar';
-// import MapMaker from './components/MapMaker';
 import * as Utilities from './Utilities';
 // Load our icons
-// import ReactDOM from 'react-dom';
 import { library } from '@fortawesome/fontawesome-svg-core';
-// import { fab } from '@fortawesome/free-brands-svg-icons';
 import { faBars } from '@fortawesome/free-solid-svg-icons';
-// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 library.add(faBars);
 
+/**
+ * A class that returns the "dfwTips" React single page app
+ */
 class App extends Component {
-
   state = {
-      map: {},
-      markers: [{}],
-      activeMarkers: [{}],
-      drawerIsOpen: false,
-      dfwTips: [],
       message: "Nothing to say yet.",
-      appGreenLight: true
+      appGreenLight: true,
+      selectedFilterValue: "all",
+      dfwTips: [],
+      filteredTips: [],
+      activeMarkerStack: [],
   }
 
-  componentDidMount = () =>{
-      console.log(`React App did mount...checking drawer state.`);
-      //TODO: determine if class contains open
-      // and if we can set   this.state.drawerIsOpen accordingly
+  /**
+   * A lifecycle method that run once per lifecycle after this component and all
+   * sub-components have rendered properly
+   */
+  componentDidMount = () => {
+      this.activeMarkerStack = [];
+      this.infoContentStack = [];
+      this.filteredTips = [];
+      this.realFilterValue = "all";//see lesson learned notes 13
 
       //Get tips from a json API 'dfwTipsAPI'
       fetch('https://rudimusmaximus.github.io/dfwTips/dfwTipsAPI.json')
           .then(Utilities.status)
           .then(Utilities.json)
           .then(data => {
-              console.log(`dfwTips Request succeeded with JSON response: `, data);
+
+              // create a new "state" object without mutating
+              // the original state object. see readme for
+              // credit to for this binding/loading data approach
+              // https://www.andreasreiterer.at/connect-react-app-rest-api/
+              const newState = Object.assign({}, this.state, {
+                  dfwTips: data
+              });
               //load the tips so we can make markers from them
-              this.setState({dfwTips: data});
-              console.log(`dfwTips data loaded into state.`);
-              //Render centered map
-              //Load it with markers made from the tips fetched above
-              this.renderMap();
+              //also triggers new render
+              this.setState(newState);
+              // console.log(`dfwTips data loaded into state.`);
+              let googleMapsPromise = Utilities.loadGoogleMapsPromise();
+              Promise.all([
+                  googleMapsPromise
+                  // future additional 3rd party info apis
+              ])
+                  .then(moreData => {
+                      let google = moreData[0];//the first return (only one for now)
+                      this.google = google; //keep google related out of state
+                      //Load it with markers made from the tips fetched above
+                      window.initMapWithMarkers = this.initMapWithMarkers;
+                      this.initMapWithMarkers();
+                  });
           })
           .catch(error => {
-              let eMessage =
-              'We could not reach the dfwTipsAPI we need to make map markers.';
-              console.log(`Request failed: `, error);
-              this.setState({message: eMessage});
-              this.setState({appGreenLight: false});
+              let eMessage = 'Problem loading APIs';
+              // console.log(`Request failed: `, error);
+              this.setState((state) => {
+                  return { message: eMessage };
+              });
+              this.setState((state) => {
+                  return { appGreenLight: false };
+              });
           });
   }
-  setInitialDrawerState = () => {
-      //need to read class (called after mounted) and
-      //if contained, set drawerIsOpen to match
-      //TODO: review. setting with class from call back triggered in
-      //child component.
-  }
-  toggleDrawerState = () => {
-      this.setState({
-          drawerIsOpen: !this.state.drawerIsOpen
+
+  /**
+   * It updates the filter value in two places and runs the initMapWithMarkers
+   */
+  onFilterChange = (newValue) => {
+      this.realFilterValue = newValue;
+      this.setState((state) => {
+          return {selectedFilterValue: newValue};
       });
-      console.log("App's toggleDrawerState just set drawerIsOpen to: ",
-          this.state.drawerIsOpen);
+      this.initMapWithMarkers();
   }
-  renderMap = () => {
-      //run script tag from outside of React
-      loadScript('https://maps.googleapis.com/maps/api/js?key='+
-      'AIzaSyBQF4afYXb3lcv9KcI6BforUA1YfFBWank&callback=initMap');
-      window.initMap = this.initMap;
-  }
-  initMap = () => {
+
+  /**
+   * It uses loaded google maps api to create a map with active markers
+   * and information windows based on the tips retrieved
+   */
+  initMapWithMarkers = () => {
+      this.activeMarkerStack = [];
+
       // create map with starting center and zoom
-      const map = new window.google.maps.Map(document.getElementById('map'),{
-          center: {lat: 32.7603, lng: -97.047797},
-          zoom: 10
+      this.map = new window.google.maps.Map(document.getElementById('map'), {
+          center: {
+              lat: 32.7603,
+              lng: -97.047797
+          },
+          zoom: 10,
+          mapTypeControl: false
       });
 
       // pop up info window
-      const infoWindow = new window.google.maps.InfoWindow();
+      this.infoWindow = new window.google.maps.InfoWindow();
+
+      //filter by active selection if necessary
+      let filterValue = this.state.selectedFilterValue;
+      filterValue = this.realFilterValue;//see note 13, managing locally
+      this.filteredTips = [];
+      if (filterValue === "all") { //use them all
+          this.filteredTips = this.state.dfwTips;
+      } else { // Just get the ones in the active selection
+          this.filteredTips = this.state.dfwTips.filter(function(tip) {
+              return (tip.short_cat_key === filterValue);
+          });
+      }
+      const newStateTwo = Object.assign({}, this.state, {
+          filteredTips: this.filteredTips
+      });
+      this.setState(newStateTwo);
 
       //use our JSON api data to create markers
-      this.state.dfwTips.map((tip) => {
+      this.filteredTips.map((tip) => {
           //content for the info window
-          const infoString = `${tip.location_name} wu-tang!`;
-          //TODO: p7 create better info window with tip data
+          const infoString =
+            `<div id="content">
+              <div id="dfwTipsInfowindow">
+              <h1 id="firstHeading">${tip.location_name}</h1>
+              <div id="bodyContent">
+                <p><em>Our tip: </em>${tip.rudy_says_tip}</p>
+                <p><em>Tell the driver: </em>${tip.address}</p>
+                <a className = "search-link" href = "${tip.search_on_google}"
+                >Google it now</a>
+              </div>
+            </div>`;
+          //styles for marker default and mouse over highlight
+          //inspired by project code 5 being stylish course material
+          var droppedIcon = Utilities.makeMarkerIcon('0091ff');
+          var mousedOverIcon = Utilities.makeMarkerIcon('FFFF24');
           const marker = new window.google.maps.Marker({
-              position: {lat: tip.lat, lng: tip.lng},
-              map: map,
-              title: tip.location_name
+              position: {
+                  lat: tip.lat,
+                  lng: tip.lng
+              },
+              map: this.map,
+              title: tip.location_name,
+              animation: window.google.maps.Animation.DROP,
+              icon: droppedIcon,
+              id: tip.short_name_key
           });
-          // handle marker click
+          this.activeMarkerStack.push(marker);//save marker to list
+          this.infoContentStack.push({id: marker.id,
+              contentString: infoString
+          });
+          //setup marker event handlers
+          marker.addListener(`mouseover`, function () {
+              this.setIcon(mousedOverIcon);
+          });
+          marker.addListener(`mouseout`, function () {
+              this.setIcon(droppedIcon);
+          });
           marker.addListener('click', () => {
-              infoWindow.setContent(infoString);
-              infoWindow.open(map, marker);
+              this.infoWindow.setContent(infoString);
+              this.infoWindow.open(this.map, marker);
           });
-          return marker;
+          return null;
       });
-  }
-  render() {
-      return (
-          <div id="body-two">
-              <FilterPanel />
-              <main className="main, light_blue">
-                  <NoGo  message={this.state.message}
-                      appGreenLight={this.state.appGreenLight}
-                  />
-                  <HamburgerBar drawerIsOpen={this.state.drawerIsOpen}
-                      toggleDrawerState={this.state.toggleDrawerState}
-                  />
-                  <div id="map"></div>
-                  <footer className="footer" id="footer">
-                      <a className="footer-link"
-                          href="https://github.com/rudimusmaximus/dfwTips"
-                      >featuring dfwTips
-                      </a>
-                  </footer>
-              </main>
-          </div>
-      );
-  }
-}
-// removed                   <MapMaker
-//                      markers={this.state.activeMarkers}
-//                />
 
-/**
- * Integrates Google Maps into the react app without any external components
- * credit to Elharony walk through video
- * https://www.youtube.com/watch?v=W5LhLZqj76s
- * for the excellent approach. Also used https://snazzymaps.com/build-a-map for
- * cetner lat long, zoom level, and styling inspirations.
- */
-function loadScript(url) {
-    let index = window.document.getElementsByTagName("script")[0];
-    let script = window.document.createElement("script");
-    script.src = url;
-    script.async = true;
-    script.defer = true;
-    //basically, make sure our script is the first one
-    index.parentNode.insertBefore(script, index);
+      this.setState((state) => {
+          return { activeMarkerStack: this.activeMarkerStack };
+      });
+  } //end initMapWithMarkers
+
+  /**
+   * It replicates the click action of a marker click when same marker is clicked
+   * as listing in filter panel
+   */
+   onFilteredTipListItemClick = (clickItemName, e) => {
+       //will be called from listing clicks
+       if (this.activeMarkerStack.length > 0 && clickItemName){
+           //get the right marker with only the item click item name
+           //this matches the marker titles when they were created
+           let m = this.activeMarkerStack
+               .filter(m => m.title === clickItemName)[0];
+           //simulate a marker click, so it's event listener animates
+           //marker by opening it's information window
+           window.google.maps.event.trigger(m, 'click');
+       }
+       // media queries keep sidebar open unless under a certain size
+       // when closed, activating will open or close
+       document.querySelector('nav#drawer').classList.toggle('open');
+       e.stopPropagation();
+
+   }
+
+   render() {
+       return (
+           <div id = "body-two">
+               <FilterPanel
+                   onFilterChange={this.onFilterChange}
+                   onFilteredTipListItemClick={this.onFilteredTipListItemClick}
+                   filteredTips={this.state.filteredTips}
+
+                   // activeMarkerStack={this.state.activeMarkerStack}
+                   activeMarkerStack={this.activeMarkerStack || []}
+                   liveFilterCategory={this.state.selectedFilterValue}
+               />
+               <main className = "main, light_blue">
+                   <NoGo message = { this.state.message }
+                       appGreenLight = { this.state.appGreenLight }
+                   />
+                   <HamburgerBar />
+                   <div id = "map"> </div>
+                   <footer className = "footer"
+                       id = "footer"
+                   >
+                       <a className = "footer-link"
+                           href = "https://github.com/rudimusmaximus/dfwTips"
+                       >featuring dfwTips
+                       </a>
+                   </footer>
+               </main>
+           </div>
+       );
+   }
 }
 
 export default App;

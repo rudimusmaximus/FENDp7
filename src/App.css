@@ -49,6 +49,10 @@ body {
 /* navigation drawer styling */
 nav {
   width: 300px;
+  max-width: 100%;
+  max-height: 100vh;
+  overflow-y: scroll;
+  z-index: 100;
   position: absolute;
 
   /* This trasform moves the drawer off canvas. */
@@ -91,6 +95,10 @@ select {
   font-size: 16px;
   border-radius: 4px;
   background-color: #099dd9;
+}
+
+ul {
+  list-style-type: none;
 }
 
 .filtered-tip-list {
@@ -231,4 +239,26 @@ select {
     width: auto;
     flex-grow: 1;
   }
+}
+
+/* for marker info windows */
+em {
+  font-weight: bold;
+}
+
+/* List and listing of filter panel */
+.list {
+  /* margin: 10px; */
+
+  /* background-color: #eee; */
+}
+
+.list .listing {
+  border: 1px solid #bbb;
+
+  /* font-size: 1.2em; */
+  text-decoration: none;
+  padding: 5px;
+
+  /* color: #333; */
 }
