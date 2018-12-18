@@ -27,6 +27,7 @@ class HamburgerBar extends Component {
               onClick={this.handleClick}
           >
               <FontAwesomeIcon
+                  tabIndex="0"
                   icon="bars"
                   color="#099dd9"
                   // size="lg"

@@ -12,12 +12,14 @@ class NoGo extends Component {
           return null;
       } else {
           return (
-              <div className="do_not_start_error">
-                  <p className="error_intro">
-                  Not this time! ***Please try again*** Curious?
+              <div aria-label="page-not-ready-error-reload"
+                  className="do_not_start_error"
+              >
+                  <p tabIndex="0" className="error_intro">
+                  Not this time! ***Please try again by reloading page.*** Curious?
                    This is what we know...
                   </p>
-                  <p className="error_message"> {this.props.message}</p>
+                  <p tabIndex="0" className="error_message"> {this.props.message}</p>
               </div>
           );
       }

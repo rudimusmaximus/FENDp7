@@ -125,13 +125,13 @@ class App extends Component {
       this.filteredTips.map((tip) => {
           //content for the info window
           const infoString =
-            `<div id="content">
+            `<div aria-label="Info window for the listing just clicked on map or in filter list." id="content">
               <div id="dfwTipsInfowindow">
-              <h1 id="firstHeading">${tip.location_name}</h1>
+              <h1 tabIndex="0" id="firstHeading">${tip.location_name}</h1>
               <div id="bodyContent">
-                <p><em>Our tip: </em>${tip.rudy_says_tip}</p>
-                <p><em>Tell the driver: </em>${tip.address}</p>
-                <a className = "search-link" href = "${tip.search_on_google}"
+                <p tabIndex="0"><em>Our tip: </em>${tip.rudy_says_tip}</p>
+                <p tabIndex="0"><em>Tell the driver: </em>${tip.address}</p>
+                <a tabIndex="0" aria-label="search link" className = "search-link" href = "${tip.search_on_google}"
                 >Google it now</a>
               </div>
             </div>`;
@@ -212,8 +212,8 @@ class App extends Component {
                        appGreenLight = { this.state.appGreenLight }
                    />
                    <HamburgerBar />
-                   <div id = "map"> </div>
-                   <footer className = "footer"
+                   <div tabIndex="0" aria-label="locations-on-a-google-map" role="application" id="map"> </div>
+                   <footer tabIndex="0" aria-label="footer-with-source-data-credits" className = "footer"
                        id = "footer"
                    >
                        <a className = "footer-link"
