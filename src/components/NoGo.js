@@ -13,11 +13,11 @@ class NoGo extends Component {
       } else {
           return (
               <div className="do_not_start_error">
-                  <p className="error_intro">
+                  <p tabIndex="0" className="error_intro">
                   Not this time! ***Please try again*** Curious?
                    This is what we know...
                   </p>
-                  <p className="error_message"> {this.props.message}</p>
+                  <p tabIndex="0" className="error_message"> {this.props.message}</p>
               </div>
           );
       }

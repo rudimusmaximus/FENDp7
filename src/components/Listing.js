@@ -5,6 +5,7 @@ import shortid from 'shortid';
 function Listing(props){
     return (
         <div className="listing"
+            tabIndex="0"
             key={shortid.generate()}
             onClick={(e) => {props.onFilteredTipListItemClick(props.name, e);}}
         >{props.name}</div>

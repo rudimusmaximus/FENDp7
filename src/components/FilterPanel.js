@@ -26,15 +26,17 @@ class FilterPanel extends Component {
               id="drawer"
           >
               <div className="drawer-filter-options">
-                  <select id="drawer-filter-selector"
+                  <select
+                      tabIndex="0"
+                      id="drawer-filter-selector"
                       name="drawer-filter-selected-category"
                       onChange={this.handleFilterChange}
                   >
-                      <option value="all">All Categories</option>
-                      <option value="bbq">Eat BBQ</option>
-                      <option value="liv">Live Entertainment</option>
-                      <option value="mov">Watch a Movie</option>
-                      <option value="air">Where`s The Airport</option>
+                      <option tabIndex="0" value="all">All Categories</option>
+                      <option tabIndex="0" value="bbq">Eat BBQ</option>
+                      <option tabIndex="0" value="liv">Live Entertainment</option>
+                      <option tabIndex="0" value="mov">Watch a Movie</option>
+                      <option tabIndex="0" value="air">Where`s The Airport</option>
                   </select>
               </div>
               <ul id="filtered-tip-list" className="filtered-tip-list">
