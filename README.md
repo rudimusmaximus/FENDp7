@@ -54,7 +54,7 @@ Ability to filter and to provide additional information as indicated in the rubr
 
 **About State**: 
 Because we are using multiple APIs, let's use an array of promises for getting our information (maybe).
-See also, [Thinking in React Guide](https://reactjs.org/docs/thinking-in-react.html
+See also, [Thinking in React Guide](https://reactjs.org/docs/thinking-in-react.html)
 See notes in lessons learned especially number 13.
 
 **React**
