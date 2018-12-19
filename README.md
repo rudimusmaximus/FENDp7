@@ -1,41 +1,46 @@
 # FENDp7 - Neighborhood Map (React)
 
 **Single Page React - responsive & accessible neighborhood map**  
-An Udacity FEND Nanodegree repository. 
+An Udacity FEND Nanodegree project repository. 
 
 # How to Test My Submission
 Just click [here to try it running on GitHub Pages](https://rudimusmaximus.github.io/FENDp7/).
-TODO: figure out how to deploy react to github pages.
+Service worker is active on hosted version see note 5 in Lessons Learned Section.
 
 # My Notes Completing This
-See also 
+See also implementation notes in [...FENDp7/issues/1](https://github.com/rudimusmaximus/FENDp7/issues/1)
+Used my preferred DevFlow and labeling scheme.
 
 ## Lessons learned with attributions and further reading  
-
 | Area | Comments |
 | :--- | :--- |
 | 1. enable react | a. starting with create in a clean build per [docs](https://reactjs.org/docs/create-a-new-react-app.html)<br>`npx create-react-app my-app`<br> will generate package.json and readme.md so run first or take care when merging with DevFlow starting material |
 | 2. gitignore | a. becoming a monster file, need to review cross platform needs against implementing my own style standards. Future TODO |
 | 3. JSON API | a. Created my own for use on this project to create the map markers. See https://rudimusmaximus.github.io/dfwTips/ for readme and here for repo https://github.com/rudimusmaximus/dfwTips <br>b. This repo is credited with link in footer. These tips are the source data for making map markers and geting the categories by which to filter. |
 | 4. jsdoc | a. how does jsdoc differ when assigning arrow functions to declared variables as arrow functions are anonymous. <br>b. [no answer](https://stackoverflow.com/questions/3171454/best-way-to-document-anonymous-objects-and-functions-with-jsdoc). opinion based approach. interesting, develop approach <br>c. [This eslint doc is a good way to go](https://eslint.org/docs/rules/require-jsdoc) |
-| 5. service workers | a. create react app comes with this! TODO: add instructions to readme...it's a single line edit. |
-| 6. svg | a. react uses https://www.w3.org/Graphics/SVG/ for it's rotating icon. TODO: research this space. |
-| 7. max watchers in ubuntu | a. limit issues with gitkraken is inotify issue in os, found [item 1](https://techsparx.com/blog/2018/02/gitkraken-inotify.html) and [item 2](https://ubuntuforums.org/showthread.php?t=1439759) for resolution. <br>```bash cat /proc/sys/fs/inotify/maxUser_watches``` <br> shows number active <br>```bash sudo sysctl fs.inotify.max_user_watches=99999``` <br> fixes and stays fixed in our crouton ubuntu when developing on chrome os |
+| 5. service workers | a. create react app comes with this! In development, we don't use. we build and host on github. In code, it's a single line edit. In `src/index.js`, opt into offline-first by switching `serviceWorker.unregister()` to `serviceWorker.register()` to turn on service worker. [see docs](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app) |
+| 6. svg | a. react uses https://www.w3.org/Graphics/SVG/ for it's rotating icon. Future TODO: research this space. |
+| 7. Max watchers in ubuntu | a. limit issues with gitkraken is inotify issue in os, found [item 1](https://techsparx.com/blog/2018/02/gitkraken-inotify.html) and [item 2](https://ubuntuforums.org/showthread.php?t=1439759) for resolution. <br>```bash cat /proc/sys/fs/inotify/maxUser_watches``` <br> shows number active <br>```bash sudo sysctl fs.inotify.max_user_watches=99999``` <br> fixes and stays fixed for session in our crouton ubuntu when developing on chrome os |
 | 8. npm | a. installed modules are now added as a dependency by default so the --save option is no longer needed. Other save options remain like --save-dev or --save-optional. see [stackoverflow](https://stackoverflow.com/questions/19578796/what-is-the-save-option-for-npm-install) |
-| 9. lists and keys | a. index approaches, see <br>[react doc](https://reactjs.org/docs/lists-and-keys.html), <br>[Medium recommendation for using 'shortid'](https://medium.com/@robinpokorny/index-as-a-key-is-an-anti-pattern-e0349aece318), <br>[recursion on children and keys (why)](https://reactjs.org/docs/reconciliation.html#recursing-on-children), <br>[install shortid](https://www.npmjs.com/package/shortid), <br>b. TODO: install and use in this project <br>c. Basically, Index as a key is an anti-pattern |
-| 10. Hamburger menu (icons) | a. Used awesome fonts per this [article](https://alligator.io/react/font-awesome/)<br>And [this app](https://github.com/FortAwesome/react-fontawesome)<br>b. resizing font-size can help size the svg font also. TODO: research other solutions that flex the element height;I used vh or viewport height percent values that add up to 100 to ensure full page coverage since there is a menu title and a footer in addition to the map. This works in most cases but not perfect. Simulated landscape on mobile seemed not optimal, will review in testing.<br>c. see also [SVG JavaScript Core for advanced packages](https://fontawesome.com/how-to-use/on-the-web/advanced/svg-javascript-core) |
+| 9. lists and keys | a. index approaches, see <br>[react doc](https://reactjs.org/docs/lists-and-keys.html), <br>[Medium recommendation for using 'shortid'](https://medium.com/@robinpokorny/index-as-a-key-is-an-anti-pattern-e0349aece318), <br>[recursion on children and keys (why)](https://reactjs.org/docs/reconciliation.html#recursing-on-children), <br>[install shortid](https://www.npmjs.com/package/shortid), <br>b. Installed and used in this project <br>c. Basically, Index as a key is an anti-pattern |
+| 10. Hamburger menu (icons) | a. Used awesome fonts per this [article](https://alligator.io/react/font-awesome/)<br>And [this app](https://github.com/FortAwesome/react-fontawesome)<br>b. resizing font-size can help size the svg font also. Future TODO: research other solutions that flex the element height; I used vh or viewport height percent values that add up to 100 to ensure full page coverage since there is a menu title and a footer in addition to the map. This works in most cases but not perfect. Simulated landscape on mobile seemed not optimal, will review in testing.<br>c. see also [SVG JavaScript Core for advanced packages](https://fontawesome.com/how-to-use/on-the-web/advanced/svg-javascript-core) |
 | 11. future enhancements | a. better sidebar styling including perhaps custom slectors and pick lists. see [article for topic ideas](https://speckyboy.com/open-source-css-javascript-select-box-snippets/) |
 | 12. collapsable nav bar | a. used udacity course material from review of patterns (off canvas pattern). articles and code samples include:<br>[udacity off canvas pattern](http://udacity.github.io/RWDF-samples/Lesson4/patterns/off-canvas.html)<br>[code pen react example](https://codepen.io/danbuda/post/a-react-navbar-component)|
-| 13. state values / where to best declare variables in React | a. React's setState is asynchronous inside event handlers and proved problematic for out use case. we preferred component variables for google api, and for the active filter selections. Testing for this was useful for learning React. Recommend learning Redux per React's own documentation. <br>b. see [React says maybe use Redux or MobX](https://reactjs.org/docs/faq-state.html#should-i-use-a-state-management-library-like-redux-or-mobx) <br>c. [this post clarifies best where to declare variables in react](https://stackoverflow.com/questions/47417217/where-to-declare-variable-in-react-js) |
-| 14. React best practices | a. [react component lifecycle 1](https://medium.com/@baphemot/understanding-reactjs-component-life-cycle-823a640b3e8d),[react component lifecycle 2](https://medium.com/@baphemot/understanding-react-react-16-3-component-life-cycle-23129bc7a705) |
-| n. TODO | a. TODO |
-## Other key walkthrougs and articles  
+| 13. state values / where to best declare variables in React | a. React's setState is asynchronous inside event handlers and proved problematic for our use case. We preferred component variables for google api, and for the active filter selections. Testing for this was useful for learning React. Recommend learning Redux per React's own documentation. <br>b. see [React says maybe use Redux or MobX](https://reactjs.org/docs/faq-state.html#should-i-use-a-state-management-library-like-redux-or-mobx) <br>c. [this post clarifies best where to declare variables in react](https://stackoverflow.com/questions/47417217/where-to-declare-variable-in-react-js) |
+| 14. React best practices | a. [react component lifecycle 1](https://medium.com/@baphemot/understanding-reactjs-component-life-cycle-823a640b3e8d), [react component lifecycle 2](https://medium.com/@baphemot/understanding-react-react-16-3-component-life-cycle-23129bc7a705) |
+| 15. A11y | a. [Accessible Maps On The Web](https://equalentry.com/accessible-maps-on-the-web/)], <br>b. [The A11Y Project](https://a11yproject.com/), <br>c. Future TODO: is there a way to tab imediately to info window after clicking a listing item that's in the tab order? Not sure if I want to if going modeless for better flow., <br>d. Went with 0 value tab indices and some aria labels and roles including keypressevets for listing clicks. |
+| 16. Build>Deploy>Host | a. [“Surge VS GitHub Pages: How to deploy a create-react-app project” by Jake Wiesler](https://link.medium.com/2GUoffmxLS), <br>b. Went with GitHub Pages using npm pluggin `gh-pages`  |
+## Other key walkthroughs and articles  
 In adition to the articles listed in my above notes, I made use of the following walkthroughs and articles for insight, inspiration, and help.
 - [Udacity | Neighborhood Map [4] - Add Dynamic Markers to Google Maps](https://www.youtube.com/watch?v=nDJ00zO9X2U)
-- TODO: any more?
+- See Ryan Waite's link below
 
-# Instructions  
-
+Utility functions made use of functions from the following and are credited in `Utilities.js` :
+-  **Project_Code_5_BeingStylish.html in ud864 on GitHub from Udacity course**
+-  [Ryan Waite youtube coding session](https://www.youtube.com/watch?v=5J6fs_BlVC0&t=1298s)
+-  [Google fetch article](https://developers.google.com/web/updates/2015/03/introduction-to-fetch)
+---
+# Instructions from course Project Overview  
 From the course Project Overview, we create an app that fulfills the [Project Rubric](https://TODO) See also, #1 [...FENDp7/issues/1](https://github.com/rudimusmaximus/FENDp7/issues/1) for checklist.
 
 ## App Functionality
@@ -47,115 +52,31 @@ Ability to filter and to provide additional information as indicated in the rubr
 
 **Task**: Create a React app that lets us interact with a set of filterable places and information from mulitple APIs.
 
-```
-<!-- info:
-- TODO
- -->
-```
+**About State**: 
+Because we are using multiple APIs, let's use an array of promises for getting our information (maybe).
+See also, [Thinking in React Guide](https://reactjs.org/docs/thinking-in-react.html
+See notes in lessons learned especially number 13.
 
-TODO: notes
-
-```
-<!-- caveats, restrictions, validations:
-- animation requirements
-- TODO
- -->
-```
-TODO: notes
-
-```
-<!-- Key Interaction:
-- TODO
- -->
-```
-
-  "**About State**: 
-  Because we are using multiple APIs, let's use an array of promises for getting our information (maybe).
-  
-  See also, [Thinking in React Guide](https://reactjs.org/docs/thinking-in-react.html
+**React**
+Lot's of lessons learned and varying approaches to React.
+Key stubling blocks were:
+- order of processing
+- context for variables
+- use of class components vs stateless functional components
+- use of prop types enabling certain onClick function calls!
+- approaches on google maps creation and iteration of markers and info windows
+- off screen menu approach with media queries where we choose to mandate sidebar beyond certain point
+- creating my own Json API info service
+- Comits were frequent and key releases tagged, so feel free to review history of you want to witness the struggle. 
 
 ## Mock
 see instructions in course.
-toUsing a working list created in app.js
-```js
-<ol className="tempOl">
-    <li>load the markers using json api and utility functions</li>
-    <li>paint the map</li>
-    <li>paint the search box or selectable filter</li>
-    <li>add the sidebar/menu/collapsible list</li>
-    <li>window popups for markers already done load from api</li>
-    <li>parse into components</li>
-    <li>testing</li>
-    <li>activate service worker and test</li>
-    <li>bonus more info from another api like squarspace</li>
-    <li>THORUGHOUT check the rubric checklist in issue 1</li>
-</ol>
-```
-Full page map with filter overlay and expandable menu of filter hits reflected in map.  
+During early dev, used a working list of to do items built into the code; then, moved to checklisted issues.
 
-### Mock menu closed welcome
+## Glo Board
+Made use of GitKraken Glo board to access simple 'submit' checklist (see issue 1). Note, these are accessible from web, mobile iOs, and inside atom editor as well.
 
-TODO: create #2 for hosting mocks and insert them here.
-
-### Mock menu open with close indicator
-
-TODO: create #2 for hosting mocks and insert them here.
-
-### Mock smallest view
-
-TODO: create #2 for hosting mocks and insert them here.
-
-## Design Note Steps
-### Step 1. Break down the app into a hierarchy of components. Draw a box around each React component.
-
-- App
-  - Map
-    - Additional info for one item
-  - Filter (menu style opens and closes over map)
-  
-### Step 2. Determine the data in our app.  
-
-- Neighborhood
-- Number of locations visible with marker(s)
-- Location name and details
-- Active filter if any
-
-### Step 3. Figure out the data that should be a part of our state:
-
-1.  Is it passed in from a parent via props? If so, it probably isn’t state.
-2.  Does it remain unchanged over time? If so, it probably isn’t state.
-3.  Can you compute it based on any other state or props in your component?
-    If so, it isn’t state.
-
-#### State:
-
-- TODO
-
-#### Not state:
-
-- TODO
-
-### Step 4. Identify where each piece of state lives.
-
-1.  Identify every component that renders something based on that state.
-2.  If multiple components need the same piece of state, put that piece of state into those components' parent-most component.
-
-If you can’t find a component where it makes sense to own the state, create
-a new component simply for holding the state and add it somewhere in the
-hierarchy above the common owner component.  
-
-**Candidate Components**
-- TODO
-
-### Step 5. Add Inverse Data Flow.
-
-State should be updated inside of the component where that state lives.
-If we pass state down from component A to component B and then need to update
-the state based on something that happened in component B, we can do so via
-callbacks: Component A will not only pass state to Component B, but it will
-also pass a callback function that will fire whenever the state should be updated.
-
-Inverse data flow: Need execute something in the parent component, but need to access data from the child component
+---  
 
 # From React Readme
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
@@ -202,3 +123,5 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+
+## npm deploy (see Lessons Learned note 16)
