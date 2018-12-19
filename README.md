@@ -4,7 +4,7 @@
 An Udacity FEND Nanodegree project repository. 
 
 # How to Test My Submission
-Just click [here to try it running on GitHub Pages](https://rudimusmaximus.github.io/FENDp7/).
+Just click [here to try it running on GitHub Pages](https://rudimusmaximus.github.io/FENDp7).
 Service worker is active on hosted version see note 5 in Lessons Learned Section.
 
 # My Notes Completing This

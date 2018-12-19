@@ -1,6 +1,6 @@
 {
   "name": "neighborhood_map",
-  "version": "0.1.7-deploy.1",
+  "version": "0.1.7-deploy.2",
   "private": true,
   "description": "FENDp7 - Neighborhood Map (React)",
   "repository": {
@@ -12,7 +12,7 @@
   "bugs": {
     "url": "https://github.com/rudimusmaximus/FENDp7/issues"
   },
-  "homepage": "https://github.com/rudimusmaximus/FENDp7#readme",
+  "homepage": "https://rudimusmaximus.github.io/FENDp7",
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.8",
     "@fortawesome/free-brands-svg-icons": "^5.5.0",
@@ -27,6 +27,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "deploy" : "npm run build&&gh-pages -d build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -38,5 +39,8 @@
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "gh-pages": "^2.0.1"
+  }
 }
