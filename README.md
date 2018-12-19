@@ -3,9 +3,22 @@
 **Single Page React - responsive & accessible neighborhood map**  
 An Udacity FEND Nanodegree project repository. 
 
-# How to Test My Submission
-Just click [here to try it running on GitHub Pages](https://rudimusmaximus.github.io/FENDp7).
+# How to Test My Submission as a user
+Just [click here to run on GitHub Pages](https://rudimusmaximus.github.io/FENDp7).
 Service worker is active on hosted version see note 5 in Lessons Learned Section.
+
+# How to Test My Submission as a developer
+After cloning the repository, you will need to install the project dependencies using node's npm as follows.
+In the command line terminal and from the directory of the cloned project enter:
+```bash
+npm install
+```
+Then run this to test in your default browser served by a development server:
+```bash
+npm start
+```
+## Questions or issues?
+Just create an issue [here](https://github.com/rudimusmaximus/FENDp7/issues).
 
 # My Notes Completing This
 See also implementation notes in [...FENDp7/issues/1](https://github.com/rudimusmaximus/FENDp7/issues/1)
